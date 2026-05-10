@@ -1832,6 +1832,61 @@
   }
 
   /* ============================================================
+     S-COMPARE — Feature comparison table
+     ============================================================ */
+  .s-compare .cmp-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin-top: 36px; font-size: 15px;
+  }
+  .s-compare .cmp-table thead th {
+    padding: 14px 16px; font-family: var(--font-display); font-weight: 700;
+    text-align: center; border-bottom: 2px solid var(--line); color: var(--ink-2);
+    background: rgba(255,255,255,0.4);
+  }
+  .s-compare .cmp-table thead th:first-child { text-align: left; width: 30%; }
+  .s-compare .cmp-table thead th.th-premium {
+    color: var(--moss-700); background: rgba(61,107,79,0.06);
+    border-bottom-color: var(--moss);
+    position: relative;
+  }
+  .s-compare .cmp-table thead th.th-premium::after {
+    content: "おすすめ"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+    color: #fff; background: var(--moss); padding: 3px 12px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .s-compare .cmp-table tbody td {
+    padding: 10px 16px; text-align: center; border-bottom: 1px solid var(--line);
+    color: var(--ink-2); vertical-align: middle;
+  }
+  .s-compare .cmp-table tbody td:first-child {
+    text-align: left; font-weight: 600; color: var(--ink);
+  }
+  .s-compare .cmp-table tbody td.td-premium {
+    background: rgba(61,107,79,0.04); font-weight: 600; color: var(--moss-700);
+  }
+  .s-compare .cmp-table tbody tr.row-highlight td {
+    background: rgba(61,107,79,0.06);
+  }
+  .s-compare .cmp-table tbody tr.row-highlight td.td-premium {
+    background: rgba(61,107,79,0.10);
+  }
+  .s-compare .cmp-table .val-none { color: var(--sub-2); font-size: 13px; }
+  .s-compare .cmp-table .val-check { color: var(--moss); font-weight: 700; font-size: 18px; }
+  .s-compare .cmp-table .val-star { color: var(--amber); font-weight: 700; }
+  .s-compare .cmp-note {
+    margin-top: 20px; font-size: 14px; color: var(--sub); line-height: 1.7;
+    padding: 16px 20px; background: rgba(255,255,255,0.5); border-radius: var(--r-md);
+    border: 1px solid var(--line);
+  }
+  .s-compare .cmp-note b { color: var(--ink-2); }
+  .s-compare .cmp-ent {
+    margin-top: 12px; display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--moss); font-weight: 600;
+  }
+  .s-compare .cmp-ent svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ============================================================
      S-FAQ — Card style redesign
      ============================================================ */
   .s-faq .faq-grid {
@@ -1893,7 +1948,7 @@
         </div>
         <div class="cv-foot">
           <div class="for"><span>For</span><b>Navilyユーザーの皆さんへ</b></div>
-          <span class="seal"><span class="dot"></span>32 slides · 約25分</span>
+          <span class="seal"><span class="dot"></span>33 slides · 約25分</span>
         </div>
       </div>
       <div class="cv-right">
@@ -1921,7 +1976,7 @@
 <section class="slide s-agenda" data-label="Agenda">
   <div class="dotgrid"></div>
   <div class="progress" style="width:2.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">01 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">01 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Agenda</div>
     <h2 class="t-section" style="margin-top:24px;">この資料の内容</h2>
@@ -1959,7 +2014,7 @@
       </div>
     </div>
     <div class="ag-band">
-      <span><b>Total</b> 32 slides</span>
+      <span><b>Total</b> 33 slides</span>
       <span>ご不明な点はフィードバックフォームからお気軽にどうぞ</span>
     </div>
   </div>
@@ -1973,7 +2028,7 @@
 <section class="slide s-why" data-label="WHY">
   <div class="dotgrid"></div>
   <div class="progress" style="width:5.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">02 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">02 / 33</span></div>
   <div class="pad">
     <p class="en-why">"We believe in your vision.<br>We believe it can take shape."</p>
     <p class="jp-why">あなたのビジョンを信じている。<br>それは、形にできる。</p>
@@ -2006,7 +2061,7 @@
 <section class="slide s-pain" data-label="Pain Qualitative">
   <div class="dotgrid"></div>
   <div class="progress" style="width:11.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">04 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">04 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Pain</div>
     <h2 class="t-section" style="margin-top:24px;">こんな経験、ないですか</h2>
@@ -2042,7 +2097,7 @@
 <section class="slide s-stats" data-label="Pain Quantitative">
   <div class="dotgrid"></div>
   <div class="progress" style="width:14.7%"></div>
-  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">05 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">05 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Data</div>
     <h2 class="t-section" style="margin-top:24px;">学びは、なぜ続かないのか</h2>
@@ -2070,7 +2125,7 @@
 <section class="slide s-stats" data-label="Coaching Impact">
   <div class="dotgrid"></div>
   <div class="progress" style="width:17.6%"></div>
-  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">06 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">06 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Coaching Impact</div>
     <h2 class="t-section" style="margin-top:24px;">コーチングは効く。ただ、届いていない。</h2>
@@ -2111,7 +2166,7 @@
 <section class="slide s-roles" data-label="4 AI Roles">
   <div class="dotgrid"></div>
   <div class="progress" style="width:23.5%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">08 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">08 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">4 AI Roles</div>
     <h2 class="t-section" style="margin-top:24px;">4つの役割が「伴走」に統合される</h2>
@@ -2152,7 +2207,7 @@
 <section class="slide s-detail" data-label="Coach Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:26.5%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">09 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">09 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Coach</div>
     <div class="cols2">
@@ -2193,7 +2248,7 @@
 <section class="slide s-detail" data-label="Architect Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:32.4%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">10 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">10 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Architect</div>
     <div class="cols2">
@@ -2239,7 +2294,7 @@
 <section class="slide s-detail" data-label="Tutor Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:35.3%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">11 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">11 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Tutor</div>
     <div class="cols2">
@@ -2293,7 +2348,7 @@
 <section class="slide s-detail" data-label="Companion Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:38.2%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">12 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">12 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Companion</div>
     <div class="cols2">
@@ -2349,7 +2404,7 @@
 <section class="slide s-target" data-label="Target">
   <div class="dotgrid"></div>
   <div class="progress" style="width:41.2%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">13 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">13 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Who is this for</div>
     <h2 class="t-section" style="margin-top:16px;">こんな人に使ってほしい</h2>
@@ -2457,7 +2512,7 @@
 <section class="slide s-steps" data-label="3 Steps Overview">
   <div class="dotgrid"></div>
   <div class="progress" style="width:47.1%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">15 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">15 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">3 Steps</div>
     <h2 class="t-section" style="margin-top:24px;">3ステップで始める</h2>
@@ -2492,7 +2547,7 @@
 <section class="slide s-chat" data-label="Step 1 Hearing">
   <div class="dotgrid"></div>
   <div class="progress" style="width:50%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">16 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">16 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Step 01</div>
     <div class="cols2">
@@ -2523,7 +2578,7 @@
 <section class="slide s-flow" data-label="Step 2 Roadmap">
   <div class="dotgrid"></div>
   <div class="progress" style="width:52.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">17 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">17 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Step 02</div>
     <h2 class="t-section" style="margin-top:20px;">あなた専用の道筋ができる</h2>
@@ -2619,7 +2674,7 @@
 <section class="slide s-home" data-label="Step 3 Coach Home">
   <div class="dotgrid"></div>
   <div class="progress" style="width:55.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">18 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">18 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Step 03</div>
     <h2 class="t-section" style="margin-top:24px;">今日やることが、もう決まっている</h2>
@@ -2698,7 +2753,7 @@
 <section class="slide s-enjoy" data-label="3 Ways">
   <div class="dotgrid"></div>
   <div class="progress" style="width:58.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">19 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">19 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">How to Use</div>
     <h2 class="t-section" style="margin-top:24px;">3つの楽しみ方</h2>
@@ -2732,7 +2787,7 @@
 <section class="slide s-features" data-label="Features">
   <div class="dotgrid"></div>
   <div class="progress" style="width:61.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">20 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">20 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Features</div>
     <h2 class="t-section" style="margin-top:24px;">主な機能</h2>
@@ -2785,7 +2840,7 @@
 <section class="slide s-tabs" data-label="Tab Structure">
   <div class="dotgrid"></div>
   <div class="progress" style="width:64.7%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">21 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">21 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">App Structure</div>
     <h2 class="t-section" style="margin-top:24px;">4つのタブ構成</h2>
@@ -2853,7 +2908,7 @@
 <section class="slide s-scenario" data-label="Scenario A">
   <div class="dotgrid"></div>
   <div class="progress" style="width:67.6%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">22 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">22 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">User Flow</div>
     <h2 class="t-section" style="margin-top:24px;">ユーザーフロー</h2>
@@ -2927,7 +2982,7 @@
 <section class="slide s-scenario" data-label="Scenario B">
   <div class="dotgrid"></div>
   <div class="progress" style="width:70.6%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">23 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">23 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Weekly Cycle</div>
     <div class="scenario-title"><span class="scenario-badge">Scenario B</span> 毎週のサイクル</div>
@@ -3006,7 +3061,7 @@
 <section class="slide s-tips" data-label="Tips">
   <div class="dotgrid"></div>
   <div class="progress" style="width:73.5%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">24 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">24 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Tips</div>
     <h2 class="t-section" style="margin-top:24px;">使い方のコツ</h2>
@@ -3060,7 +3115,7 @@
 <section class="slide s-pricing" data-label="Pricing">
   <div class="dotgrid"></div>
   <div class="progress" style="width:79.4%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">26 / 32</span></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">26 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Plans</div>
     <h2 class="t-section" style="margin-top:24px;">プラン</h2>
@@ -3115,12 +3170,136 @@
 </section>
 
 <!-- ============================================================
-     SLIDE 27 — 始め方
+     SLIDE 27 — プラン比較表
+     ============================================================ -->
+<section class="slide s-compare" data-label="Plan Comparison">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:80.9%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">27 / 33</span></div>
+  <div class="pad">
+    <div class="eyebrow">Plan Comparison</div>
+    <h2 class="t-section" style="margin-top:24px;">プラン機能比較</h2>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Free<br><span style="font-size:13px;font-weight:400;color:var(--sub);">&#165;0</span></th>
+          <th>Lite<br><span style="font-size:13px;font-weight:400;color:var(--sub);">&#165;980/月</span></th>
+          <th class="th-premium">Premium<br><span style="font-size:13px;font-weight:400;">&#165;1,980/月 or &#165;1,233/月<small>（年額）</small></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-highlight">
+          <td>AIチャット</td>
+          <td>日3回</td>
+          <td>月15回</td>
+          <td class="td-premium val-star">無制限</td>
+        </tr>
+        <tr>
+          <td>AIモデル</td>
+          <td>Sonnet</td>
+          <td>Sonnet</td>
+          <td class="td-premium val-star">Opus選択可（月30回）</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>全教材アクセス</td>
+          <td><span class="val-none">1コースのみ</span></td>
+          <td><span class="val-check">&#10003;</span></td>
+          <td class="td-premium"><span class="val-check">&#10003;</span></td>
+        </tr>
+        <tr>
+          <td>単体教材生成</td>
+          <td>月3回</td>
+          <td>月5回</td>
+          <td class="td-premium val-star">月20回</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>AIチューター</td>
+          <td>月10回</td>
+          <td>月10回</td>
+          <td class="td-premium val-star">無制限</td>
+        </tr>
+        <tr>
+          <td>音声対話（TTS/STT）</td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td><span class="val-check">&#10003;</span></td>
+          <td class="td-premium"><span class="val-check">&#10003;</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td>ロードマップ作成</td>
+          <td>1個</td>
+          <td>月3個</td>
+          <td class="td-premium">月10個</td>
+        </tr>
+        <tr>
+          <td>ハイライト&amp;ブックマーク</td>
+          <td>月30個</td>
+          <td><span class="val-check">無制限</span></td>
+          <td class="td-premium"><span class="val-check">無制限</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td>ストリーク保護</td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td class="td-premium val-star">無制限</td>
+        </tr>
+        <tr>
+          <td>自己分析レポート</td>
+          <td><span class="val-none">一部のみ</span></td>
+          <td><span class="val-none">一部のみ</span></td>
+          <td class="td-premium val-star">全セクション + PDF</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>修了証PDF</td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td class="td-premium"><span class="val-check">&#10003;</span></td>
+        </tr>
+        <tr>
+          <td>広場フォーク</td>
+          <td>月3回</td>
+          <td>月10回</td>
+          <td class="td-premium"><span class="val-check">無制限</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td>週次レポートメール</td>
+          <td><span class="val-none">月次</span></td>
+          <td><span class="val-none">月次</span></td>
+          <td class="td-premium"><span class="val-check">週次</span></td>
+        </tr>
+        <tr>
+          <td>年額プラン（38% OFF）</td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td class="td-premium val-star">&#165;14,800/年</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>無料トライアル</td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td><span class="val-none">&mdash;</span></td>
+          <td class="td-premium val-star">7日間</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="cmp-note">
+      <b>Premiumを選ぶ理由:</b> AIチャット無制限 + 最高品質Opusモデル + ストリーク保護 + 自己分析PDF + 修了証。年額なら月&#165;1,233（コーヒー1杯/日以下）。7日間の無料トライアル付き。
+      <br>
+      <span class="cmp-ent">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        チームで導入したい場合は Enterprise プランもご相談いただけます。
+      </span>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>27</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 28 — 始め方
      ============================================================ -->
 <section class="slide s-howto" data-label="Getting Started">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:82.4%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">27 / 32</span></div>
+  <div class="progress" style="width:84.8%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">28 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Getting Started</div>
     <h2 class="t-section" style="margin-top:24px;">始め方</h2>
@@ -3153,16 +3332,16 @@
     </div>
     <div class="note"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>無料で、クレジットカード不要で始められます。</div>
   </div>
-  <div class="chrome"><span>Navily</span><span>27</span></div>
+  <div class="chrome"><span>Navily</span><span>28</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 28 — 困ったときは (FAQ) カードスタイル
+     SLIDE 29 — 困ったときは (FAQ)
      ============================================================ -->
 <section class="slide s-faq" data-label="FAQ">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:85.3%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">28 / 32</span></div>
+  <div class="progress" style="width:87.9%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">29 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">FAQ</div>
     <h2 class="t-section" style="margin-top:24px;">困ったときは</h2>
@@ -3189,16 +3368,16 @@
       </div>
     </div>
   </div>
-  <div class="chrome"><span>Navily</span><span>28</span></div>
+  <div class="chrome"><span>Navily</span><span>29</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 29 — フィードバックの方法
+     SLIDE 30 — フィードバックの方法
      ============================================================ -->
 <section class="slide s-fb" data-label="Feedback">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:88.2%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">29 / 32</span></div>
+  <div class="progress" style="width:90.9%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">30 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Feedback</div>
     <h2 class="t-section" style="margin-top:24px;">フィードバックの送り方</h2>
@@ -3226,16 +3405,16 @@
     </div>
   </div>
   <img src="penly-laptop.png" alt="" style="position:absolute; right:40px; bottom:40px; height:160px; opacity:0.85; pointer-events:none; z-index:3;" />
-  <div class="chrome"><span>Navily</span><span>29</span></div>
+  <div class="chrome"><span>Navily</span><span>30</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 30 — まとめ（改善版）
+     SLIDE 31 — まとめ（改善版）
      ============================================================ -->
 <section class="slide s-summary" data-label="Summary">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:91.2%"></div>
-  <div class="running-header"><span class="l"><span class="ix">Navily</span> Summary</span><span class="r">30 / 32</span></div>
+  <div class="progress" style="width:93.9%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Summary</span><span class="r">31 / 33</span></div>
   <div class="pad">
     <div class="eyebrow">Summary</div>
     <h2 class="t-section" style="margin-top:24px;">Navily &#8212; ゴールを見つけて、毎日伴走するAIコーチ</h2>
@@ -3266,11 +3445,11 @@
       </div>
     </div>
   </div>
-  <div class="chrome"><span>Navily</span><span>30</span></div>
+  <div class="chrome"><span>Navily</span><span>31</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 31 — CTA
+     SLIDE 32 — CTA
      ============================================================ -->
 <section class="slide s-cta" data-label="CTA">
   <div class="progress" style="width:100%"></div>
@@ -3299,7 +3478,7 @@
       <span>Navily &#8212; AIコーチ</span>
     </div>
   </div>
-  <div class="chrome"><span>Navily</span><span>31</span></div>
+  <div class="chrome"><span>Navily</span><span>32</span></div>
 </section>
 
 </deck-stage>
