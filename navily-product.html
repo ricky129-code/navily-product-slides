@@ -316,7 +316,7 @@
   .s-cover .cv-role .n { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
   .s-cover .cv-role .nm { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #fff; }
   .s-cover .cv-role .ja { font-size: 24px; color: rgba(255,255,255,0.65); line-height: 1.4; }
-  .s-cover .cv-divider { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.14); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); text-transform: uppercase; white-space: nowrap; }
+  .s-cover .cv-divider { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.14); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase; }
 
   /* ============================================================
      S-AGENDA — Agenda slide
@@ -325,12 +325,12 @@
   .s-agenda .ag-step { padding: 40px 32px 36px; border-radius: var(--r-xl); min-height: 480px; background: rgba(255,255,255,0.7); border: 1px solid var(--line); box-shadow: var(--shadow-1); display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; }
   .s-agenda .ag-step::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--moss), transparent); }
   .s-agenda .ag-step.now { background: linear-gradient(180deg, var(--moss-50), rgba(255,255,255,0.6)); border-color: var(--moss); box-shadow: var(--shadow-2); }
-  .s-agenda .ag-step .pin { position: absolute; top: -14px; left: 28px; padding: 4px 12px; background: var(--moss); color: #fff; border-radius: 999px; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
+  .s-agenda .ag-step .pin { position: absolute; top: -14px; left: 28px; padding: 4px 12px; background: var(--moss); color: #fff; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
   .s-agenda .ag-step .num { font-family: var(--font-mono); font-weight: 600; font-size: 56px; line-height: 1; color: var(--moss); letter-spacing: -0.02em; }
-  .s-agenda .ag-step .ptag { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sub-2); }
+  .s-agenda .ag-step .ptag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sub-2); }
   .s-agenda .ag-step h3 { font-size: 30px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--ink); }
   .s-agenda .ag-step .desc { font-size: 16px; color: var(--sub); line-height: 1.6; }
-  .s-agenda .ag-step .pages { margin-top: auto; padding-top: 16px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--moss-700); }
+  .s-agenda .ag-step .pages { margin-top: auto; padding-top: 16px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--moss-700); }
   .s-agenda .ag-step .pages b { color: var(--ink); font-weight: 700; font-size: 14px; }
   .s-agenda .ag-conn { display: flex; align-items: center; justify-content: center; color: var(--moss-300); font-family: var(--font-mono); font-size: 22px; }
   .s-agenda .ag-band { margin-top: 32px; padding: 22px 32px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--r-md); font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
@@ -414,7 +414,271 @@
   .s-div .chrome { color: rgba(255,255,255,0.25); }
 
   /* ============================================================
-     S-PAIN — Pain quotes
+     S-DIV (v2) — editorial divider with chapter index
+     ============================================================ */
+  .s-div.v2 { background: #14241B; color: #F5F1E8; }
+  .s-div.v2::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 8% 105%, rgba(107,144,121,0.32), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 92% -5%, rgba(180,83,9,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .s-div.v2 .grain {
+    position: absolute; inset: 0; opacity: 0.6; pointer-events: none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+    background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 60%, transparent 100%);
+            mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 60%, transparent 100%);
+  }
+  .s-div.v2 .div-pad {
+    position: absolute; inset: 0;
+    display: grid; grid-template-columns: 1.55fr 1fr; gap: 80px;
+    padding: 110px 120px 120px;
+    z-index: 2;
+  }
+  .s-div.v2 .left { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+  .s-div.v2 .top-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.32em;
+    color: rgba(245,241,232,0.55); text-transform: uppercase;
+  }
+  .s-div.v2 .top-meta .rule { flex: 0 0 64px; height: 1px; background: rgba(245,241,232,0.4); }
+  .s-div.v2 .num-stack {
+    display: flex; align-items: flex-start; gap: 28px; margin-top: -8px;
+  }
+  .s-div.v2 .big-num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 360px; line-height: 0.82; letter-spacing: -0.06em;
+    color: #F5F1E8;
+    animation: slideInLeft 0.6s ease-out 0.05s both;
+  }
+  .s-div.v2 .num-side {
+    padding-top: 26px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .s-div.v2 .num-side .of {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.3em;
+    color: rgba(245,241,232,0.5); text-transform: uppercase;
+  }
+  .s-div.v2 .num-side .dot {
+    width: 8px; height: 8px; border-radius: 999px; background: var(--amber);
+    box-shadow: 0 0 0 4px rgba(180,83,9,0.18);
+  }
+  .s-div.v2 h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 132px; line-height: 0.96; letter-spacing: -0.045em;
+    margin: 0;
+    animation: fadeUp 0.5s ease-out 0.15s both;
+  }
+  .s-div.v2 h1 .small {
+    display: block;
+    font-size: 0.36em; letter-spacing: 0.04em; font-weight: 400;
+    color: rgba(245,241,232,0.55); margin-bottom: 18px;
+    font-family: var(--font-jp);
+  }
+  .s-div.v2 h1 .it {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    color: var(--moss-100); letter-spacing: -0.02em;
+  }
+  .s-div.v2 .lede {
+    margin-top: 36px; max-width: 720px;
+    font-size: 26px; line-height: 1.7; color: rgba(245,241,232,0.78);
+    border-left: 2px solid rgba(245,241,232,0.28); padding-left: 22px;
+    animation: fadeUp 0.5s ease-out 0.25s both;
+  }
+
+  .s-div.v2 .right {
+    display: flex; flex-direction: column; gap: 28px;
+    border-left: 1px solid rgba(245,241,232,0.12);
+    padding-left: 56px; padding-top: 28px;
+    animation: fadeUp 0.5s ease-out 0.35s both;
+  }
+  .s-div.v2 .toc-label {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.3em;
+    color: rgba(245,241,232,0.5); text-transform: uppercase;
+  }
+  .s-div.v2 .toc-label .sq { width: 6px; height: 6px; background: var(--amber); transform: rotate(45deg); }
+  .s-div.v2 .toc { display: flex; flex-direction: column; gap: 0; }
+  .s-div.v2 .toc-item {
+    display: grid; grid-template-columns: 56px 1fr auto;
+    align-items: center; gap: 18px;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(245,241,232,0.10);
+  }
+  .s-div.v2 .toc-item:last-child { border-bottom: none; }
+  .s-div.v2 .toc-item .n {
+    font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.18em;
+    color: rgba(245,241,232,0.45);
+  }
+  .s-div.v2 .toc-item .t {
+    font-family: var(--font-jp); font-size: 22px; font-weight: 500; color: #F5F1E8;
+    line-height: 1.4;
+  }
+  .s-div.v2 .toc-item .t .sub {
+    display: block; font-size: 14px; font-weight: 400;
+    color: rgba(245,241,232,0.48); margin-top: 4px; letter-spacing: 0.04em;
+  }
+  .s-div.v2 .toc-item .arrow { color: rgba(245,241,232,0.4); font-size: 18px; }
+  .s-div.v2 .footnote {
+    margin-top: auto;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    color: rgba(245,241,232,0.38); text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .s-div.v2 .footnote .b { width: 6px; height: 6px; border-radius: 999px; background: var(--moss-100); }
+  .s-div.v2 .chrome { color: rgba(245,241,232,0.32); }
+
+  /* ============================================================
+     S-PAIN (v2) — voices collage
+     ============================================================ */
+  .s-pain.v2 .pad {
+    display: flex; flex-direction: column;
+  }
+  .s-pain.v2 .pain-grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 22px;
+    flex: 1;
+    min-height: 0;
+  }
+  .s-pain.v2 .voice .body { font-size: 26px; }
+  .s-pain.v2 .voice.journal .body { font-size: 30px; }
+  .s-pain.v2 .voice.search .body { font-size: 22px; }
+  .s-pain.v2 .voice {
+    position: relative;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line);
+    background: #FFFFFF;
+    padding: 28px 32px 26px;
+    box-shadow: var(--shadow-2);
+    display: flex; flex-direction: column;
+    animation: fadeUp 0.5s ease-out both;
+  }
+  .s-pain.v2 .voice:nth-child(1) { animation-delay: 0.05s; }
+  .s-pain.v2 .voice:nth-child(2) { animation-delay: 0.12s; }
+  .s-pain.v2 .voice:nth-child(3) { animation-delay: 0.20s; }
+  .s-pain.v2 .voice:nth-child(4) { animation-delay: 0.28s; }
+  .s-pain.v2 .voice .meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.16em;
+    color: var(--sub-2); text-transform: uppercase;
+    padding-bottom: 14px; border-bottom: 1px dashed var(--line-2);
+  }
+  .s-pain.v2 .voice .meta .who {
+    display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-weight: 600;
+  }
+  .s-pain.v2 .voice .meta .who .av {
+    width: 22px; height: 22px; border-radius: 999px;
+    background: var(--moss-100); color: var(--moss-700);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 0;
+  }
+  .s-pain.v2 .voice .body {
+    font-family: var(--font-jp); font-size: 28px; line-height: 1.6;
+    color: var(--ink); font-weight: 500;
+    margin-top: 18px; flex: 1;
+    text-wrap: pretty;
+  }
+  .s-pain.v2 .voice .body .hl { background: linear-gradient(transparent 60%, rgba(180,83,9,0.18) 60%); padding: 0 2px; }
+  .s-pain.v2 .voice .tag-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+  }
+  .s-pain.v2 .voice .tag {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--moss-700); text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--moss-50); border: 1px solid rgba(61,107,79,0.14);
+  }
+
+  /* per-voice surface variants */
+  .s-pain.v2 .voice.sns {
+    background: #FFFFFF;
+  }
+  .s-pain.v2 .voice.sns .meta .ch::before { content: "@"; color: var(--moss); margin-right: 2px; }
+  .s-pain.v2 .voice.search {
+    background: #F8F6EE;
+  }
+  .s-pain.v2 .voice.search .body {
+    font-family: var(--font-mono); font-size: 24px; font-weight: 500;
+    color: var(--ink-2);
+    background: #FFFFFF;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    padding: 18px 26px 18px 56px;
+    margin-top: 18px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .s-pain.v2 .voice.search .body::before {
+    content: "";
+    position: absolute; left: 22px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; border-radius: 999px;
+    border: 2px solid var(--sub-2);
+  }
+  .s-pain.v2 .voice.search .body::after {
+    content: "";
+    position: absolute; left: 36px; top: calc(50% + 6px);
+    width: 8px; height: 2px; background: var(--sub-2);
+    transform: rotate(45deg);
+  }
+  .s-pain.v2 .voice.journal {
+    background: linear-gradient(180deg, #FFFDF7 0%, #FBF8EC 100%);
+    background-image:
+      linear-gradient(180deg, #FFFDF7 0%, #FBF8EC 100%),
+      repeating-linear-gradient(180deg, transparent 0, transparent 39px, rgba(180,83,9,0.10) 39px, rgba(180,83,9,0.10) 40px);
+    background-blend-mode: multiply;
+  }
+  .s-pain.v2 .voice.journal .body {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    font-size: 32px; line-height: 1.55; color: var(--ink-2);
+  }
+  .s-pain.v2 .voice.chat {
+    background: #14241B; color: #F5F1E8;
+    border: 1px solid #1f3528;
+  }
+  .s-pain.v2 .voice.chat .meta {
+    color: rgba(245,241,232,0.55); border-bottom-color: rgba(245,241,232,0.16);
+  }
+  .s-pain.v2 .voice.chat .meta .who { color: #F5F1E8; }
+  .s-pain.v2 .voice.chat .meta .who .av { background: var(--amber); color: #fff; }
+  .s-pain.v2 .voice.chat .body { color: #F5F1E8; }
+  .s-pain.v2 .voice.chat .body .hl { background: linear-gradient(transparent 60%, rgba(180,83,9,0.55) 60%); }
+  .s-pain.v2 .voice.chat .tag {
+    background: rgba(245,241,232,0.06); color: var(--moss-100);
+    border-color: rgba(245,241,232,0.12);
+  }
+
+  .s-pain.v2 .insight {
+    margin-top: 22px;
+    display: flex; align-items: center; gap: 22px;
+    padding: 16px 26px;
+    border-radius: 999px;
+    background: var(--ink); color: #F5F1E8;
+    box-shadow: var(--shadow-3);
+    animation: fadeUp 0.5s ease-out 0.4s both;
+  }
+  .s-pain.v2 .insight .label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    padding: 4px 10px; border-radius: 999px;
+    border: 1px solid rgba(180,83,9,0.45);
+    flex-shrink: 0;
+  }
+  .s-pain.v2 .insight .text {
+    font-size: 19px; line-height: 1.5; color: #F5F1E8; font-weight: 500;
+  }
+  .s-pain.v2 .insight .text .it { font-family: var(--font-serif); font-style: italic; color: var(--moss-100); }
+
+  /* hide the old chrome footer when v2 insight pill is present, push chrome up */
+  .s-pain.v2 .chrome { bottom: 36px; }
+
+  /* ============================================================
+     S-PAIN — Pain quotes (legacy, unused after v2 redesign)
      ============================================================ */
   .s-pain .quotes {
     display: flex; flex-direction: column; gap: 0; margin-top: 40px;
@@ -635,7 +899,7 @@
     display: flex; justify-content: space-between; align-items: center;
     padding-bottom: 14px; margin-bottom: 14px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-family: var(--font-mono); font-size: 14px;
+    font-family: var(--font-mono); font-size: 12px;
     color: rgba(255,255,255,0.6); letter-spacing: 0.18em; text-transform: uppercase;
   }
 
@@ -656,7 +920,7 @@
     align-self: flex-end; border-bottom-right-radius: 6px;
   }
   .s-detail .rm-coach .who {
-    display: block; font-size: 14px; letter-spacing: 0.2em;
+    display: block; font-size: 10px; letter-spacing: 0.2em;
     text-transform: uppercase; opacity: 0.5; margin-bottom: 4px; font-weight: 600;
   }
   .s-detail .rm-coach .typing {
@@ -691,7 +955,7 @@
     width: 28px; height: 28px; border-radius: 50%;
     background: #182f23; border: 2px solid rgba(255,255,255,0.25);
     display: grid; place-items: center;
-    font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 700;
+    font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 700;
     z-index: 1;
   }
   .s-detail .rm-architect .ms.done .dot { background: var(--moss); border-color: var(--moss); color: #fff; }
@@ -706,7 +970,7 @@
   .s-detail .rm-architect .ms.cur .label { color: #fff; font-weight: 700; font-size: 17px; }
   .s-detail .rm-architect .ms.locked .label { color: rgba(255,255,255,0.4); }
   .s-detail .rm-architect .ms .meta {
-    font-family: var(--font-mono); font-size: 14px;
+    font-family: var(--font-mono); font-size: 11px;
     color: rgba(255,255,255,0.5); letter-spacing: 0.12em; text-transform: uppercase;
   }
   .s-detail .rm-architect .ms.cur .meta {
@@ -715,7 +979,7 @@
   }
   .s-detail .rm-architect .ms-divider {
     margin: 8px 0 12px; padding: 0 0 0 44px;
-    font-family: var(--font-mono); font-size: 14px;
+    font-family: var(--font-mono); font-size: 11px;
     color: rgba(255,255,255,0.45); letter-spacing: 0.18em; text-transform: uppercase;
   }
 
@@ -731,13 +995,13 @@
     margin: 0 0 4px;
   }
   .s-detail .rm-tutor .doc-meta {
-    font-family: var(--font-mono); font-size: 14px;
+    font-family: var(--font-mono); font-size: 11px;
     color: rgba(255,255,255,0.55); letter-spacing: 0.18em; text-transform: uppercase;
   }
   .s-detail .rm-tutor .ttfs {
     background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
     padding: 6px 12px; border-radius: 999px;
-    font-family: var(--font-mono); font-size: 14px; color: #fff;
+    font-family: var(--font-mono); font-size: 11px; color: #fff;
     letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
   }
   .s-detail .rm-tutor .doc-body {
@@ -770,7 +1034,7 @@
   }
   .s-detail .rm-tutor .audio .wave i.act { background: #fff; }
   .s-detail .rm-tutor .audio .time {
-    font-family: var(--font-mono); font-size: 14px; color: rgba(255,255,255,0.7);
+    font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.7);
     letter-spacing: 0.08em;
   }
 
@@ -793,7 +1057,7 @@
     font-family: var(--font-display); font-size: 18px; font-weight: 700;
   }
   .s-detail .rm-companion .welcome .greet { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--ink); }
-  .s-detail .rm-companion .welcome .since { font-family: var(--font-mono); font-size: 14px; color: var(--sub-2); letter-spacing: 0.15em; text-transform: uppercase; }
+  .s-detail .rm-companion .welcome .since { font-family: var(--font-mono); font-size: 11px; color: var(--sub-2); letter-spacing: 0.15em; text-transform: uppercase; }
   .s-detail .rm-companion .welcome .msg { font-size: 15px; line-height: 1.6; color: var(--ink-2); }
   .s-detail .rm-companion .streak-card {
     background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
@@ -809,11 +1073,11 @@
     font-family: var(--font-display); font-size: 32px; font-weight: 800; color: #fff; line-height: 1;
   }
   .s-detail .rm-companion .streak-card .lab {
-    font-family: var(--font-mono); font-size: 14px; color: rgba(255,255,255,0.55);
+    font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.55);
     letter-spacing: 0.18em; text-transform: uppercase; margin-top: 4px;
   }
   .s-detail .rm-companion .streak-card .protect {
-    font-family: var(--font-mono); font-size: 14px;
+    font-family: var(--font-mono); font-size: 10px;
     background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
     padding: 6px 10px; border-radius: 999px; color: #fff;
     letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap;
@@ -869,7 +1133,7 @@
     display: flex; flex-direction: column; gap: 6px;
   }
   .s-target .pabs.core { background: var(--moss-50); border-color: var(--moss-300); }
-  .s-target .pabs .ano { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--moss-700); font-weight: 700; }
+  .s-target .pabs .ano { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--moss-700); font-weight: 700; }
   .s-target .pabs h4 { margin: 0; font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1.25; letter-spacing: -0.01em; }
   .s-target .pabs .adesc { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
   .s-target .pcard {
@@ -899,7 +1163,7 @@
   }
   .s-target .pcard .nm { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1.1; }
   .s-target .pcard.core .nm { color: #fff; }
-  .s-target .pcard .age { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub-2); }
+  .s-target .pcard .age { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub-2); }
   .s-target .pcard.core .age { color: rgba(255,255,255,0.6); }
   .s-target .pcard .pbody {
     padding: 20px 24px 22px; display: flex; flex-direction: column; gap: 14px; flex: 1;
@@ -910,7 +1174,7 @@
     display: grid; grid-template-columns: auto 1fr; gap: 6px 12px;
     font-size: 13px; line-height: 1.5;
   }
-  .s-target .pcard .pinfo .k { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub-2); padding-top: 3px; }
+  .s-target .pcard .pinfo .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub-2); padding-top: 3px; }
   .s-target .pcard .pinfo .v { color: var(--ink-2); }
   .s-target .pcard .pinfo .v b { color: var(--ink); font-weight: 700; }
   .s-target .pcard.core .pinfo .k { color: rgba(255,255,255,0.55); }
@@ -1069,14 +1333,14 @@
   .s-flow .rm-track { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; }
   .s-flow .rm-track .rm-name { font-size: 15px; font-weight: 600; color: var(--ink-2); }
   .s-flow .rm-bar { height: 36px; border-radius: 6px; background: var(--bg-soft); display: flex; overflow: hidden; }
-  .s-flow .rm-bar .seg { flex: 1; border-right: 2px solid white; display:flex; align-items:center; justify-content:center; font-size: 14px; font-weight: 600; color: var(--sub); }
+  .s-flow .rm-bar .seg { flex: 1; border-right: 2px solid white; display:flex; align-items:center; justify-content:center; font-size: 12px; font-weight: 600; color: var(--sub); }
   .s-flow .rm-bar .seg:last-child { border-right: none; }
   .s-flow .rm-bar .seg.done { background: var(--moss); color: white; }
   .s-flow .rm-bar .seg.now { background: rgba(61,107,79,0.22); color: var(--moss-700); }
   .s-flow .rm-bar .seg.lock { background: var(--bg-soft); color: var(--mute); }
   .s-flow .rm-legend {
     display: flex; gap: 24px; margin-top: 16px; font-family: var(--font-mono);
-    font-size: 14px; letter-spacing: 0.1em; color: var(--sub); justify-content: flex-end;
+    font-size: 12px; letter-spacing: 0.1em; color: var(--sub); justify-content: flex-end;
   }
   .s-flow .rm-legend .lg { display: inline-flex; align-items: center; gap: 8px; }
   .s-flow .rm-legend .sw { width: 12px; height: 12px; border-radius: 3px; }
@@ -1130,7 +1394,7 @@
   .s-home .today-mock .tm-action.tm-done .tm-act { color: var(--mute); text-decoration: line-through; }
   .s-home .today-mock .tm-action .tm-meta { font-size: 13px; color: var(--sub); }
   .s-home .today-mock .tm-action .tm-pill {
-    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.1em; font-weight: 600;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; font-weight: 600;
     color: var(--moss); padding: 4px 10px; border-radius: 999px; background: var(--card-moss);
     flex-shrink: 0;
   }
@@ -1146,7 +1410,7 @@
     background: var(--moss-700); color: white; box-shadow: 0 12px 28px rgba(31,58,42,0.18);
   }
   .s-home .home-msg .msg-hero .lbl {
-    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.2em;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em;
     color: rgba(255,255,255,0.6); font-weight: 600; margin-bottom: 14px;
   }
   .s-home .home-msg .msg-hero .ph {
@@ -1216,7 +1480,135 @@
   .s-enjoy .way .desc { font-size: 17px; line-height: 1.65; color: var(--ink-2); }
 
   /* ============================================================
-     S-FEATURES — Feature grid (hierarchy: 3 core + 6 sub)
+     S-FEATURES (v2) — Features grouped by role pillars
+     ============================================================ */
+  .s-features.v2 .pad { display: flex; flex-direction: column; }
+  .s-features.v2 .head-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 60px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .s-features.v2 .head-row h2 { margin-top: 18px; }
+  .s-features.v2 .head-row .h-right {
+    flex: 0 0 auto;
+    text-align: right;
+    display: flex; flex-direction: column; gap: 6px;
+    padding-bottom: 6px;
+  }
+  .s-features.v2 .head-row .h-count {
+    font-family: var(--font-display); font-weight: 700; font-size: 64px;
+    color: var(--moss); letter-spacing: -0.04em; line-height: 1;
+  }
+  .s-features.v2 .head-row .h-count .slash { color: var(--moss-300); margin: 0 4px; }
+  .s-features.v2 .head-row .h-meta {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.22em;
+    color: var(--sub-2); text-transform: uppercase;
+  }
+
+  .s-features.v2 .pillars {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-rows: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .s-features.v2 .pillar {
+    display: grid; grid-template-columns: 320px 1fr;
+    gap: 48px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.4s ease-out both;
+  }
+  .s-features.v2 .pillar:nth-child(1) { animation-delay: 0.05s; }
+  .s-features.v2 .pillar:nth-child(2) { animation-delay: 0.15s; }
+  .s-features.v2 .pillar:nth-child(3) { animation-delay: 0.25s; }
+  .s-features.v2 .pillar:last-child { border-bottom: none; }
+
+  .s-features.v2 .pillar .p-side {
+    display: flex; flex-direction: column; gap: 10px;
+    padding-top: 6px;
+  }
+  .s-features.v2 .pillar .p-num {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.3em;
+    color: var(--sub-2); text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .s-features.v2 .pillar .p-num::before {
+    content: ""; width: 6px; height: 6px; background: var(--moss);
+    transform: rotate(45deg); display: inline-block;
+  }
+  .s-features.v2 .pillar .p-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 44px; line-height: 1.05; letter-spacing: -0.02em;
+    color: var(--ink); margin: 0;
+  }
+  .s-features.v2 .pillar .p-title .it {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    color: var(--moss); letter-spacing: -0.01em; margin-left: 6px;
+  }
+  .s-features.v2 .pillar .p-desc {
+    font-size: 16px; line-height: 1.65; color: var(--sub);
+    max-width: 280px; margin: 4px 0 0 0;
+  }
+
+  .s-features.v2 .pillar .p-feats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 28px;
+    padding-left: 32px;
+    border-left: 1px solid var(--line);
+  }
+  .s-features.v2 .pillar .feat-mini {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .s-features.v2 .pillar .feat-mini .ftop {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .s-features.v2 .pillar .feat-mini .ico-sq {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--moss-50); color: var(--moss-700);
+    flex-shrink: 0;
+  }
+  .s-features.v2 .pillar .feat-mini .ico-sq svg { width: 18px; height: 18px; }
+  .s-features.v2 .pillar .feat-mini h4 {
+    font-size: 22px; font-weight: 700; margin: 0; line-height: 1.3;
+    color: var(--ink);
+  }
+  .s-features.v2 .pillar .feat-mini p {
+    font-size: 15px; line-height: 1.6; color: var(--sub); margin: 0;
+  }
+  .s-features.v2 .pillar .feat-mini .spec {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--moss-700); text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* highlight first pillar (Architect = entry point) */
+  .s-features.v2 .pillar.lead .p-title { color: var(--moss-700); }
+  .s-features.v2 .pillar.lead .feat-mini .ico-sq { background: var(--moss); color: #fff; }
+
+  .s-features.v2 .foot-quote {
+    margin-top: 14px;
+    display: flex; align-items: baseline; gap: 18px;
+    padding: 14px 26px;
+    background: var(--ink); color: #F5F1E8;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-2);
+    animation: fadeUp 0.4s ease-out 0.4s both;
+  }
+  .s-features.v2 .foot-quote .lbl {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.3em;
+    color: var(--amber); text-transform: uppercase; flex-shrink: 0;
+  }
+  .s-features.v2 .foot-quote .q {
+    font-size: 22px; line-height: 1.5; color: #F5F1E8; font-weight: 500;
+  }
+  .s-features.v2 .foot-quote .q .it {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    color: var(--moss-100); margin-right: 8px;
+  }
+
+  /* ============================================================
+     S-FEATURES — Feature grid (legacy, replaced by v2)
      ============================================================ */
   .s-features .fgrid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;
@@ -1246,7 +1638,7 @@
   .s-features .feat p { font-size: 18px; color: var(--sub); margin: 0; line-height: 1.65; }
   .s-features .feat.feat-core p { font-size: 19px; }
   .s-features .feat .feat-tag {
-    margin-top: auto; font-family: var(--font-mono); font-size: 14px;
+    margin-top: auto; font-family: var(--font-mono); font-size: 12px;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--moss); font-weight: 600;
   }
   .s-features .feat.feat-core .feat-tag { color: var(--moss); opacity: 0.8; }
@@ -1657,7 +2049,7 @@
   }
   .s-scenario .cf-card .cf-meta {
     margin-top: auto; padding-top: 12px;
-    font-family: var(--font-mono); font-size: 14px; color: var(--moss);
+    font-family: var(--font-mono); font-size: 12px; color: var(--moss);
     letter-spacing: 0.12em; font-weight: 600;
     border-top: 1px dashed var(--line-2);
   }
@@ -1779,7 +2171,7 @@
   }
   .s-pricing .plan-v2.premium-v2 .pv2-name::after {
     content: "BEST VALUE";
-    font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
     letter-spacing: 0.2em; padding: 4px 10px;
     background: rgba(245,185,82,0.18);
     color: #b07910; border-radius: 999px;
@@ -1832,61 +2224,6 @@
   }
 
   /* ============================================================
-     S-COMPARE — Feature comparison table
-     ============================================================ */
-  .s-compare .cmp-table {
-    width: 100%; border-collapse: separate; border-spacing: 0;
-    margin-top: 36px; font-size: 15px;
-  }
-  .s-compare .cmp-table thead th {
-    padding: 14px 16px; font-family: var(--font-display); font-weight: 700;
-    text-align: center; border-bottom: 2px solid var(--line); color: var(--ink-2);
-    background: rgba(255,255,255,0.4);
-  }
-  .s-compare .cmp-table thead th:first-child { text-align: left; width: 30%; }
-  .s-compare .cmp-table thead th.th-premium {
-    color: var(--moss-700); background: rgba(61,107,79,0.06);
-    border-bottom-color: var(--moss);
-    position: relative;
-  }
-  .s-compare .cmp-table thead th.th-premium::after {
-    content: "おすすめ"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
-    color: #fff; background: var(--moss); padding: 3px 12px; border-radius: 999px;
-    white-space: nowrap;
-  }
-  .s-compare .cmp-table tbody td {
-    padding: 10px 16px; text-align: center; border-bottom: 1px solid var(--line);
-    color: var(--ink-2); vertical-align: middle;
-  }
-  .s-compare .cmp-table tbody td:first-child {
-    text-align: left; font-weight: 600; color: var(--ink);
-  }
-  .s-compare .cmp-table tbody td.td-premium {
-    background: rgba(61,107,79,0.04); font-weight: 600; color: var(--moss-700);
-  }
-  .s-compare .cmp-table tbody tr.row-highlight td {
-    background: rgba(61,107,79,0.06);
-  }
-  .s-compare .cmp-table tbody tr.row-highlight td.td-premium {
-    background: rgba(61,107,79,0.10);
-  }
-  .s-compare .cmp-table .val-none { color: var(--sub-2); font-size: 13px; }
-  .s-compare .cmp-table .val-check { color: var(--moss); font-weight: 700; font-size: 18px; }
-  .s-compare .cmp-table .val-star { color: var(--amber); font-weight: 700; }
-  .s-compare .cmp-note {
-    margin-top: 20px; font-size: 14px; color: var(--sub); line-height: 1.7;
-    padding: 16px 20px; background: rgba(255,255,255,0.5); border-radius: var(--r-md);
-    border: 1px solid var(--line);
-  }
-  .s-compare .cmp-note b { color: var(--ink-2); }
-  .s-compare .cmp-ent {
-    margin-top: 12px; display: inline-flex; align-items: center; gap: 8px;
-    font-size: 14px; color: var(--moss); font-weight: 600;
-  }
-  .s-compare .cmp-ent svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-  /* ============================================================
      S-FAQ — Card style redesign
      ============================================================ */
   .s-faq .faq-grid {
@@ -1904,7 +2241,7 @@
   .s-faq .qa-card:nth-child(4) { animation-delay: 0.26s; }
   .s-faq .qa-card .qa-cat {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.15em;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.15em;
     text-transform: uppercase; color: var(--moss); font-weight: 600;
   }
   .s-faq .qa-card .qa-cat .qa-ico {
@@ -1947,14 +2284,14 @@
           <p class="sub">何から始めればいいか、わからない。<br>その一歩を、一緒に踏み出す。</p>
         </div>
         <div class="cv-foot">
-          <div class="for"><span>For</span><b>Navilyユーザーの皆さんへ</b></div>
-          <span class="seal"><span class="dot"></span>33 slides · 約25分</span>
+          <div class="for"><span>For</span><b>投資家・パートナー候補</b></div>
+          <span class="seal"><span class="dot"></span>32 slides · 約25分</span>
         </div>
       </div>
       <div class="cv-right">
         <div>
           <span class="cv-label">AI Coach · 4 Roles</span>
-          <p class="cv-quote">あなたの<span class="em">ビジョン</span>は、<br><span class="em">形にできる</span>。</p>
+          <p class="cv-quote">「<span class="em">卒業</span>」ではなく<br>「<span class="em">進化</span>」を設計する。</p>
         </div>
         <div>
           <div class="cv-roles">
@@ -1963,7 +2300,7 @@
             <div class="cv-role"><span class="n">03</span><span class="nm">Tutor</span><span class="ja">教材を生成する</span></div>
             <div class="cv-role"><span class="n">04</span><span class="nm">Companion</span><span class="ja">毎日伴走する</span></div>
           </div>
-          <div class="cv-divider"><span>Penly — Your AI Coach</span><span>Navily / 2026</span></div>
+          <div class="cv-divider"><span>Penri — Your AI Coach</span><span>Navily / 2026</span></div>
         </div>
       </div>
     </div>
@@ -1976,10 +2313,10 @@
 <section class="slide s-agenda" data-label="Agenda">
   <div class="dotgrid"></div>
   <div class="progress" style="width:2.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">01 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">01 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Agenda</div>
-    <h2 class="t-section" style="margin-top:24px;">この資料の内容</h2>
+    <h2 class="t-section" style="margin-top:24px;">本日お伝えすること</h2>
     <div class="ag-flow">
       <div class="ag-step">
         <span class="num">01</span>
@@ -2014,11 +2351,10 @@
       </div>
     </div>
     <div class="ag-band">
-      <span><b>Total</b> 33 slides</span>
-      <span>ご不明な点はフィードバックフォームからお気軽にどうぞ</span>
+      <span><b>Total</b> 32 slides · 約25分</span>
+      <span>Q&amp;A は最後にまとめて</span>
     </div>
   </div>
-  <img src="penly-wave.png" alt="" style="position:absolute; right:40px; bottom:40px; height:160px; opacity:0.7; pointer-events:none; z-index:3;" />
   <div class="chrome"><span>Navily</span><span>01</span></div>
 </section>
 
@@ -2028,7 +2364,7 @@
 <section class="slide s-why" data-label="WHY">
   <div class="dotgrid"></div>
   <div class="progress" style="width:5.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">02 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">02 / 32</span></div>
   <div class="pad">
     <p class="en-why">"We believe in your vision.<br>We believe it can take shape."</p>
     <p class="jp-why">あなたのビジョンを信じている。<br>それは、形にできる。</p>
@@ -2037,7 +2373,6 @@
       <p>ポテンシャルが価値に変換される社会をつくる。</p>
       <p style="margin-top:20px; font-size:22px; color:var(--sub);">プロダクト約束: 学びたいものを、学びたい順で、なりたい自分に最短距離で近づける。</p>
     </div>
-    <img src="penly-thinking.png" alt="" style="position:absolute; right:40px; bottom:40px; height:200px; opacity:0.9; pointer-events:none;" />
   </div>
   <div class="chrome"><span>Navily</span><span>02</span></div>
 </section>
@@ -2045,12 +2380,56 @@
 <!-- ============================================================
      SLIDE 3 — Section divider: Part 1
      ============================================================ -->
-<section class="slide s-div" data-label="Part 1 Divider">
+<section class="slide s-div v2" data-label="Part 1 Divider">
   <div class="progress" style="width:8.8%"></div>
+  <div class="grain"></div>
   <div class="div-pad">
-    <div class="ch"><span class="num">01</span> Part one</div>
-    <h1>The <span class="it">Problem</span></h1>
-    <p class="sub">コーチが必要だが手が届かない。<br>学びたいのに続かない。この構造的な断絶。</p>
+    <div class="left">
+      <div class="top-meta">
+        <span class="rule"></span>
+        <span>Part one · 課題</span>
+      </div>
+      <div class="num-stack">
+        <div class="big-num">01</div>
+        <div class="num-side">
+          <span class="dot"></span>
+          <span class="of">of four</span>
+        </div>
+      </div>
+      <div>
+        <h1>
+          <span class="small">なぜ私たちは作るのか —</span>
+          The <span class="it">Problem</span>
+        </h1>
+        <p class="lede">
+          コーチが必要だが、手が届かない。<br>
+          学びたいのに、続かない。<br>
+          ここに、構造的な断絶がある。
+        </p>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="toc-label"><span class="sq"></span><span>Inside this chapter</span></div>
+      <div class="toc">
+        <div class="toc-item">
+          <span class="n">04</span>
+          <span class="t">こんな経験、ないですか<span class="sub">学習者の声 — 4 つの定性インサイト</span></span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="toc-item">
+          <span class="n">05</span>
+          <span class="t">学びは、なぜ続かないのか<span class="sub">完走率3–6% / 機会格差41% の現実</span></span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="toc-item">
+          <span class="n">06</span>
+          <span class="t">コーチングは効く。ただ、届いていない<span class="sub">ROI 14倍 / 離職率半減のインパクト</span></span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+      <div class="footnote"><span class="b"></span><span>3 slides · ≈ 4 min</span></div>
+    </div>
   </div>
   <div class="chrome"><span>Navily</span><span>03</span></div>
 </section>
@@ -2058,34 +2437,55 @@
 <!-- ============================================================
      SLIDE 4 — Pain (定性)
      ============================================================ -->
-<section class="slide s-pain" data-label="Pain Qualitative">
+<section class="slide s-pain v2" data-label="Pain Qualitative">
   <div class="dotgrid"></div>
   <div class="progress" style="width:11.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">04 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">04 / 32</span></div>
   <div class="pad">
-    <div class="eyebrow">Pain</div>
-    <h2 class="t-section" style="margin-top:24px;">こんな経験、ないですか</h2>
-    <div class="quotes">
-      <div class="q">
-        <span class="mark">&#x201C;</span>
-        <span>Udemy買ったけど、3日で開かなくなった。</span>
+    <div class="eyebrow">Voices · 学習者の声</div>
+    <h2 class="t-section" style="margin-top:24px;">こんな経験、<span class="it">ないですか</span></h2>
+
+    <div class="pain-grid">
+      <div class="voice sns">
+        <div class="meta">
+          <span class="who"><span class="av">M</span><span>Mika · 27</span></span>
+          <span class="ch">tweet · 23:14</span>
+        </div>
+        <p class="body">Udemy買ったけど、<span class="hl">3日で開かなくなった</span>やつ、私だけじゃないよね…</p>
+        <div class="tag-row"><span class="tag">挫折</span><span class="tag">未消化</span></div>
       </div>
-      <div class="q">
-        <span class="mark">&#x201C;</span>
-        <span>本を買って読み始めたけど、自分の仕事にどう活かすかわからなかった。</span>
+
+      <div class="voice search">
+        <div class="meta">
+          <span class="who"><span class="av">R</span><span>Ren · 24</span></span>
+          <span class="ch">深夜検索</span>
+        </div>
+        <p class="body">プロダクトマネージャー なり方 未経験 ロードマップ</p>
+        <div class="tag-row"><span class="tag">情報過多</span><span class="tag">自分に合うか不明</span></div>
       </div>
-      <div class="q">
-        <span class="mark">&#x201C;</span>
-        <span>YouTube見たけど、自分の状況にあてはまらなかった。</span>
+
+      <div class="voice journal">
+        <div class="meta">
+          <span class="who"><span class="av">A</span><span>Ayano · 31</span></span>
+          <span class="ch">memo · 月曜の朝</span>
+        </div>
+        <p class="body">ChatGPTに聞いても、先週の目標を覚えてない。<br>毎週、ふりだしに戻る感じがする。</p>
+        <div class="tag-row"><span class="tag">継続性なし</span><span class="tag">文脈ゼロ</span></div>
       </div>
-      <div class="q">
-        <span class="mark">&#x201C;</span>
-        <span>ChatGPTに聞いても、先週話したことを覚えていない。</span>
+
+      <div class="voice chat">
+        <div class="meta">
+          <span class="who"><span class="av">K</span><span>Kosuke · 29</span></span>
+          <span class="ch">DM · 22:47</span>
+        </div>
+        <p class="body">コーチに相談したいけど、<span class="hl">月3万</span>は…正直、払えない。</p>
+        <div class="tag-row"><span class="tag">価格の壁</span><span class="tag">コーチ不在</span></div>
       </div>
-      <div class="q">
-        <span class="mark">&#x201C;</span>
-        <span>コーチに相談したいけど、月3万は払えない。</span>
-      </div>
+    </div>
+
+    <div class="insight">
+      <span class="label">Insight</span>
+      <p class="text">教材も、AIも、コーチも存在する。 けれど、<span class="it">「自分の文脈で、続けられる」</span>形では届いていない。</p>
     </div>
   </div>
   <div class="chrome"><span>Navily</span><span>04</span></div>
@@ -2097,7 +2497,7 @@
 <section class="slide s-stats" data-label="Pain Quantitative">
   <div class="dotgrid"></div>
   <div class="progress" style="width:14.7%"></div>
-  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">05 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">05 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Data</div>
     <h2 class="t-section" style="margin-top:24px;">学びは、なぜ続かないのか</h2>
@@ -2125,7 +2525,7 @@
 <section class="slide s-stats" data-label="Coaching Impact">
   <div class="dotgrid"></div>
   <div class="progress" style="width:17.6%"></div>
-  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">06 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">01</span> 課題と市場構造</span><span class="r">06 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Coaching Impact</div>
     <h2 class="t-section" style="margin-top:24px;">コーチングは効く。ただ、届いていない。</h2>
@@ -2166,7 +2566,7 @@
 <section class="slide s-roles" data-label="4 AI Roles">
   <div class="dotgrid"></div>
   <div class="progress" style="width:23.5%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">08 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">08 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">4 AI Roles</div>
     <h2 class="t-section" style="margin-top:24px;">4つの役割が「伴走」に統合される</h2>
@@ -2207,7 +2607,7 @@
 <section class="slide s-detail" data-label="Coach Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:26.5%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">09 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">09 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Coach</div>
     <div class="cols2">
@@ -2248,7 +2648,7 @@
 <section class="slide s-detail" data-label="Architect Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:32.4%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">10 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">10 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Architect</div>
     <div class="cols2">
@@ -2294,7 +2694,7 @@
 <section class="slide s-detail" data-label="Tutor Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:35.3%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">11 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">11 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Tutor</div>
     <div class="cols2">
@@ -2348,7 +2748,7 @@
 <section class="slide s-detail" data-label="Companion Detail">
   <div class="dotgrid"></div>
   <div class="progress" style="width:38.2%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">12 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">12 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Companion</div>
     <div class="cols2">
@@ -2394,7 +2794,6 @@
       </div>
     </div>
   </div>
-  <img src="penly-wave.png" alt="" style="position:absolute; right:40px; bottom:40px; height:180px; opacity:0.85; pointer-events:none; z-index:3;" />
   <div class="chrome"><span>Navily</span><span>12</span></div>
 </section>
 
@@ -2404,7 +2803,7 @@
 <section class="slide s-target" data-label="Target">
   <div class="dotgrid"></div>
   <div class="progress" style="width:41.2%"></div>
-  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">13 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">02</span> Navilyのアプローチ</span><span class="r">13 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Who is this for</div>
     <h2 class="t-section" style="margin-top:16px;">こんな人に使ってほしい</h2>
@@ -2512,7 +2911,7 @@
 <section class="slide s-steps" data-label="3 Steps Overview">
   <div class="dotgrid"></div>
   <div class="progress" style="width:47.1%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">15 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">15 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">3 Steps</div>
     <h2 class="t-section" style="margin-top:24px;">3ステップで始める</h2>
@@ -2537,7 +2936,6 @@
       </div>
     </div>
   </div>
-  <img src="penly-reading.png" alt="" style="position:absolute; right:40px; bottom:40px; height:160px; opacity:0.85; pointer-events:none; z-index:3;" />
   <div class="chrome"><span>Navily</span><span>15</span></div>
 </section>
 
@@ -2547,7 +2945,7 @@
 <section class="slide s-chat" data-label="Step 1 Hearing">
   <div class="dotgrid"></div>
   <div class="progress" style="width:50%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">16 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">16 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Step 01</div>
     <div class="cols2">
@@ -2578,7 +2976,7 @@
 <section class="slide s-flow" data-label="Step 2 Roadmap">
   <div class="dotgrid"></div>
   <div class="progress" style="width:52.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">17 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">17 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Step 02</div>
     <h2 class="t-section" style="margin-top:20px;">あなた専用の道筋ができる</h2>
@@ -2674,7 +3072,7 @@
 <section class="slide s-home" data-label="Step 3 Coach Home">
   <div class="dotgrid"></div>
   <div class="progress" style="width:55.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">18 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">18 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Step 03</div>
     <h2 class="t-section" style="margin-top:24px;">今日やることが、もう決まっている</h2>
@@ -2753,7 +3151,7 @@
 <section class="slide s-enjoy" data-label="3 Ways">
   <div class="dotgrid"></div>
   <div class="progress" style="width:58.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">19 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">19 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">How to Use</div>
     <h2 class="t-section" style="margin-top:24px;">3つの楽しみ方</h2>
@@ -2784,52 +3182,130 @@
 <!-- ============================================================
      SLIDE 20 — 機能一覧
      ============================================================ -->
-<section class="slide s-features" data-label="Features">
+<section class="slide s-features v2" data-label="Features">
   <div class="dotgrid"></div>
   <div class="progress" style="width:61.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">20 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">20 / 32</span></div>
   <div class="pad">
-    <div class="eyebrow">Features</div>
-    <h2 class="t-section" style="margin-top:24px;">主な機能</h2>
-    <div class="fgrid">
-      <div class="feat feat-core">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span> ヒアリング（v5）</h4>
-        <p>AIとの対話でゴール・現在地を明確にする。10ターン深掘り+AIチップ14カテゴリ。</p>
+    <div class="head-row">
+      <div>
+        <div class="eyebrow">Features × Roles</div>
+        <h2 class="t-section" style="margin-top:18px;">9つの機能、ひとつの<span class="it">伴走</span></h2>
       </div>
-      <div class="feat feat-core">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 7 8 11.7z"/></svg></span> ロードマップ生成</h4>
-        <p>ゴールから逆算した学習計画を自動生成。最大15コース、段階的アンロック。</p>
-      </div>
-      <div class="feat feat-core">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span> AI教材生成</h4>
-        <p>テキスト教材をリアルタイム生成。ストリーミング配信でTTFS 5-7秒。</p>
-      </div>
-      <div class="feat">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></span> 音声解説</h4>
-        <p>Gemini TTS+STT音声対話。通勤中でも学べる。</p>
-      </div>
-      <div class="feat">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-4 8-7.5 8-12a8 8 0 10-16 0c0 4.5 4 8 8 12z"/><circle cx="12" cy="11" r="3"/></svg></span> スキルツリー</h4>
-        <p>6色+4状態で知識のつながりを俯瞰。</p>
-      </div>
-      <div class="feat">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg></span> AIチャット</h4>
-        <p>ペンリーとの自由対話。学習の悩み、何でもOK。</p>
-      </div>
-      <div class="feat">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span> 週次レポート</h4>
-        <p>学習成果と来週のアクションを自動生成。</p>
-      </div>
-      <div class="feat">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span> ストリーク</h4>
-        <p>連続学習日数を記録。保護機能あり。</p>
-      </div>
-      <div class="feat">
-        <h4><span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span> チェックイン</h4>
-        <p>学習報告 &#8594; AIフィードバック。伴走の核。</p>
+      <div class="h-right">
+        <div class="h-count">9<span class="slash">/</span><span style="font-size:0.45em; color:var(--moss-300);">3 pillars</span></div>
+        <div class="h-meta">機能の総覧 · 役割で束ねる</div>
       </div>
     </div>
-    <p class="feat-note"><span class="it" style="font-size:26px; color:var(--moss);">機能は手段。</span> 伴走が本質。</p>
+
+    <div class="pillars">
+      <div class="pillar lead">
+        <div class="p-side">
+          <div class="p-num"><span>01 · Architect</span></div>
+          <h3 class="p-title">道を <span class="it">描く</span></h3>
+          <p class="p-desc">対話でゴールと現在地を捉え、進む順番を設計する。</p>
+        </div>
+        <div class="p-feats">
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+              <h4>ヒアリング v5</h4>
+            </div>
+            <p>AIとの対話でゴール・現在地を明確にする。</p>
+            <span class="spec">10 turns · 14 categories</span>
+          </div>
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 7 8 11.7z"/></svg></span>
+              <h4>ロードマップ生成</h4>
+            </div>
+            <p>ゴールから逆算した学習計画を自動生成。</p>
+            <span class="spec">Up to 15 courses</span>
+          </div>
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-4 8-7.5 8-12a8 8 0 10-16 0c0 4.5 4 8 8 12z"/><circle cx="12" cy="11" r="3"/></svg></span>
+              <h4>スキルツリー</h4>
+            </div>
+            <p>知識のつながりを俯瞰し、空白を埋める。</p>
+            <span class="spec">6 colors · 4 states</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="p-side">
+          <div class="p-num"><span>02 · Tutor</span></div>
+          <h3 class="p-title">必要な時に <span class="it">教える</span></h3>
+          <p class="p-desc">教材も解説も、迷ったら何でも聞ける相手として。</p>
+        </div>
+        <div class="p-feats">
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span>
+              <h4>AI教材生成</h4>
+            </div>
+            <p>テキスト教材をリアルタイム生成。</p>
+            <span class="spec">TTFS 5–7s · streaming</span>
+          </div>
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></span>
+              <h4>音声解説</h4>
+            </div>
+            <p>通勤中もハンズフリーで学べる音声対話。</p>
+            <span class="spec">Gemini TTS + STT</span>
+          </div>
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg></span>
+              <h4>AIチャット</h4>
+            </div>
+            <p>ペンリーとの自由対話。学習の悩み、何でも。</p>
+            <span class="spec">Always-on companion</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="p-side">
+          <div class="p-num"><span>03 · Coach</span></div>
+          <h3 class="p-title">毎日 <span class="it">隣を歩く</span></h3>
+          <p class="p-desc">続ける仕組みを内蔵し、学びを生活に編み込む。</p>
+        </div>
+        <div class="p-feats">
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+              <h4>チェックイン</h4>
+            </div>
+            <p>学習報告 → AIフィードバック。伴走の核。</p>
+            <span class="spec">Daily ritual</span>
+          </div>
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+              <h4>ストリーク</h4>
+            </div>
+            <p>連続学習日数を記録。やさしい保護機能あり。</p>
+            <span class="spec">Streak shield</span>
+          </div>
+          <div class="feat-mini">
+            <div class="ftop">
+              <span class="ico-sq"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span>
+              <h4>週次レポート</h4>
+            </div>
+            <p>学習成果と来週のアクションを自動生成。</p>
+            <span class="spec">Auto · every Sunday</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-quote">
+      <span class="lbl">Principle</span>
+      <p class="q"><span class="it">機能は手段。</span>伴走が、本質。</p>
+    </div>
   </div>
   <div class="chrome"><span>Navily</span><span>20</span></div>
 </section>
@@ -2840,7 +3316,7 @@
 <section class="slide s-tabs" data-label="Tab Structure">
   <div class="dotgrid"></div>
   <div class="progress" style="width:64.7%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">21 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">21 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">App Structure</div>
     <h2 class="t-section" style="margin-top:24px;">4つのタブ構成</h2>
@@ -2908,7 +3384,7 @@
 <section class="slide s-scenario" data-label="Scenario A">
   <div class="dotgrid"></div>
   <div class="progress" style="width:67.6%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">22 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">22 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">User Flow</div>
     <h2 class="t-section" style="margin-top:24px;">ユーザーフロー</h2>
@@ -2982,7 +3458,7 @@
 <section class="slide s-scenario" data-label="Scenario B">
   <div class="dotgrid"></div>
   <div class="progress" style="width:70.6%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">23 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">23 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Weekly Cycle</div>
     <div class="scenario-title"><span class="scenario-badge">Scenario B</span> 毎週のサイクル</div>
@@ -3061,7 +3537,7 @@
 <section class="slide s-tips" data-label="Tips">
   <div class="dotgrid"></div>
   <div class="progress" style="width:73.5%"></div>
-  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">24 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">03</span> 体験と使い方</span><span class="r">24 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Tips</div>
     <h2 class="t-section" style="margin-top:24px;">使い方のコツ</h2>
@@ -3092,7 +3568,6 @@
       </div>
     </div>
   </div>
-  <img src="penly-thinking.png" alt="" style="position:absolute; right:40px; bottom:40px; height:160px; opacity:0.85; pointer-events:none; z-index:3;" />
   <div class="chrome"><span>Navily</span><span>24</span></div>
 </section>
 
@@ -3115,7 +3590,7 @@
 <section class="slide s-pricing" data-label="Pricing">
   <div class="dotgrid"></div>
   <div class="progress" style="width:79.4%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">26 / 33</span></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">26 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Plans</div>
     <h2 class="t-section" style="margin-top:24px;">プラン</h2>
@@ -3170,136 +3645,12 @@
 </section>
 
 <!-- ============================================================
-     SLIDE 27 — プラン比較表
-     ============================================================ -->
-<section class="slide s-compare" data-label="Plan Comparison">
-  <div class="dotgrid"></div>
-  <div class="progress" style="width:80.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">27 / 33</span></div>
-  <div class="pad">
-    <div class="eyebrow">Plan Comparison</div>
-    <h2 class="t-section" style="margin-top:24px;">プラン機能比較</h2>
-    <table class="cmp-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Free<br><span style="font-size:13px;font-weight:400;color:var(--sub);">&#165;0</span></th>
-          <th>Lite<br><span style="font-size:13px;font-weight:400;color:var(--sub);">&#165;980/月</span></th>
-          <th class="th-premium">Premium<br><span style="font-size:13px;font-weight:400;">&#165;1,980/月 or &#165;1,233/月<small>（年額）</small></span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="row-highlight">
-          <td>AIチャット</td>
-          <td>日3回</td>
-          <td>月15回</td>
-          <td class="td-premium val-star">無制限</td>
-        </tr>
-        <tr>
-          <td>AIモデル</td>
-          <td>Sonnet</td>
-          <td>Sonnet</td>
-          <td class="td-premium val-star">Opus選択可（月30回）</td>
-        </tr>
-        <tr class="row-highlight">
-          <td>全教材アクセス</td>
-          <td><span class="val-none">1コースのみ</span></td>
-          <td><span class="val-check">&#10003;</span></td>
-          <td class="td-premium"><span class="val-check">&#10003;</span></td>
-        </tr>
-        <tr>
-          <td>単体教材生成</td>
-          <td>月3回</td>
-          <td>月5回</td>
-          <td class="td-premium val-star">月20回</td>
-        </tr>
-        <tr class="row-highlight">
-          <td>AIチューター</td>
-          <td>月10回</td>
-          <td>月10回</td>
-          <td class="td-premium val-star">無制限</td>
-        </tr>
-        <tr>
-          <td>音声対話（TTS/STT）</td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td><span class="val-check">&#10003;</span></td>
-          <td class="td-premium"><span class="val-check">&#10003;</span></td>
-        </tr>
-        <tr class="row-highlight">
-          <td>ロードマップ作成</td>
-          <td>1個</td>
-          <td>月3個</td>
-          <td class="td-premium">月10個</td>
-        </tr>
-        <tr>
-          <td>ハイライト&amp;ブックマーク</td>
-          <td>月30個</td>
-          <td><span class="val-check">無制限</span></td>
-          <td class="td-premium"><span class="val-check">無制限</span></td>
-        </tr>
-        <tr class="row-highlight">
-          <td>ストリーク保護</td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td class="td-premium val-star">無制限</td>
-        </tr>
-        <tr>
-          <td>自己分析レポート</td>
-          <td><span class="val-none">一部のみ</span></td>
-          <td><span class="val-none">一部のみ</span></td>
-          <td class="td-premium val-star">全セクション + PDF</td>
-        </tr>
-        <tr class="row-highlight">
-          <td>修了証PDF</td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td class="td-premium"><span class="val-check">&#10003;</span></td>
-        </tr>
-        <tr>
-          <td>広場フォーク</td>
-          <td>月3回</td>
-          <td>月10回</td>
-          <td class="td-premium"><span class="val-check">無制限</span></td>
-        </tr>
-        <tr class="row-highlight">
-          <td>週次レポートメール</td>
-          <td><span class="val-none">月次</span></td>
-          <td><span class="val-none">月次</span></td>
-          <td class="td-premium"><span class="val-check">週次</span></td>
-        </tr>
-        <tr>
-          <td>年額プラン（38% OFF）</td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td class="td-premium val-star">&#165;14,800/年</td>
-        </tr>
-        <tr class="row-highlight">
-          <td>無料トライアル</td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td><span class="val-none">&mdash;</span></td>
-          <td class="td-premium val-star">7日間</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="cmp-note">
-      <b>Premiumを選ぶ理由:</b> AIチャット無制限 + 最高品質Opusモデル + ストリーク保護 + 自己分析PDF + 修了証。年額なら月&#165;1,233（コーヒー1杯/日以下）。7日間の無料トライアル付き。
-      <br>
-      <span class="cmp-ent">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        チームで導入したい場合は Enterprise プランもご相談いただけます。
-      </span>
-    </div>
-  </div>
-  <div class="chrome"><span>Navily</span><span>27</span></div>
-</section>
-
-<!-- ============================================================
-     SLIDE 28 — 始め方
+     SLIDE 27 — 始め方
      ============================================================ -->
 <section class="slide s-howto" data-label="Getting Started">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:84.8%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">28 / 33</span></div>
+  <div class="progress" style="width:82.4%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">27 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Getting Started</div>
     <h2 class="t-section" style="margin-top:24px;">始め方</h2>
@@ -3332,16 +3683,16 @@
     </div>
     <div class="note"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>無料で、クレジットカード不要で始められます。</div>
   </div>
-  <div class="chrome"><span>Navily</span><span>28</span></div>
+  <div class="chrome"><span>Navily</span><span>27</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 29 — 困ったときは (FAQ)
+     SLIDE 28 — 困ったときは (FAQ) カードスタイル
      ============================================================ -->
 <section class="slide s-faq" data-label="FAQ">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:87.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">29 / 33</span></div>
+  <div class="progress" style="width:85.3%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">28 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">FAQ</div>
     <h2 class="t-section" style="margin-top:24px;">困ったときは</h2>
@@ -3368,16 +3719,16 @@
       </div>
     </div>
   </div>
-  <div class="chrome"><span>Navily</span><span>29</span></div>
+  <div class="chrome"><span>Navily</span><span>28</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 30 — フィードバックの方法
+     SLIDE 29 — フィードバックの方法
      ============================================================ -->
 <section class="slide s-fb" data-label="Feedback">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:90.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">30 / 33</span></div>
+  <div class="progress" style="width:88.2%"></div>
+  <div class="running-header"><span class="l"><span class="ix">04</span> プランと次のステップ</span><span class="r">29 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Feedback</div>
     <h2 class="t-section" style="margin-top:24px;">フィードバックの送り方</h2>
@@ -3404,17 +3755,16 @@
       <p class="fb-desc">「ここが使いにくい」「意味がわからなかった」「期待と違った」&#8212; そういう声が、Navilyを<em>本当に</em>良くします。遠慮なく送ってください。</p>
     </div>
   </div>
-  <img src="penly-laptop.png" alt="" style="position:absolute; right:40px; bottom:40px; height:160px; opacity:0.85; pointer-events:none; z-index:3;" />
-  <div class="chrome"><span>Navily</span><span>30</span></div>
+  <div class="chrome"><span>Navily</span><span>29</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 31 — まとめ（改善版）
+     SLIDE 30 — まとめ（改善版）
      ============================================================ -->
 <section class="slide s-summary" data-label="Summary">
   <div class="dotgrid"></div>
-  <div class="progress" style="width:93.9%"></div>
-  <div class="running-header"><span class="l"><span class="ix">Navily</span> Summary</span><span class="r">31 / 33</span></div>
+  <div class="progress" style="width:91.2%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Summary</span><span class="r">30 / 32</span></div>
   <div class="pad">
     <div class="eyebrow">Summary</div>
     <h2 class="t-section" style="margin-top:24px;">Navily &#8212; ゴールを見つけて、毎日伴走するAIコーチ</h2>
@@ -3445,11 +3795,11 @@
       </div>
     </div>
   </div>
-  <div class="chrome"><span>Navily</span><span>31</span></div>
+  <div class="chrome"><span>Navily</span><span>30</span></div>
 </section>
 
 <!-- ============================================================
-     SLIDE 32 — CTA
+     SLIDE 31 — CTA
      ============================================================ -->
 <section class="slide s-cta" data-label="CTA">
   <div class="progress" style="width:100%"></div>
@@ -3466,19 +3816,17 @@
         <span class="cta-link-label">navilyai.com</span>
       </div>
       <div class="cta-link-item">
-        <a href="https://navilyai.com/ja/ios" target="_blank" rel="noopener" class="cta-btn cta-btn-outline">iOS版を予約する &#8594;</a>
-        <span class="cta-link-label">先行アクセス + リリース通知</span>
-        <span class="cta-link-label" style="font-size:14px; margin-top:-6px; opacity:0.5;">登録は無料・メール1通でキャンセル可</span>
+        <a href="https://navilyai.com/ja/ios" target="_blank" rel="noopener" class="cta-btn cta-btn-outline">iOS ウェイトリスト &#8594;</a>
+        <span class="cta-link-label">navilyai.com/ja/ios</span>
       </div>
     </div>
     <p class="cta-sub">クレジットカード不要 &#183; AIチャット 3回/日 無料</p>
-    <img src="penly-cheer.png" alt="" style="position:absolute; right:40px; bottom:40px; height:180px; opacity:0.85; pointer-events:none;" />
     <div class="brand-row">
       <img src="navily-logo.png" alt="Navily" />
       <span>Navily &#8212; AIコーチ</span>
     </div>
   </div>
-  <div class="chrome"><span>Navily</span><span>32</span></div>
+  <div class="chrome"><span>Navily</span><span>31</span></div>
 </section>
 
 </deck-stage>
