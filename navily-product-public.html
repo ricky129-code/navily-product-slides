@@ -1,0 +1,1655 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<title>Navily — AIコーチ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="やりたいことはある。何から始めればいいか、わからない。その一歩を、一緒に踏み出す。AIコーチ Navily。" />
+<meta property="og:title" content="Navily — AIコーチ" />
+<meta property="og:description" content="やりたいことはある。何から始めればいいか、わからない。その一歩を、一緒に踏み出す。" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&family=Noto+Serif+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="deck-stage.js"></script>
+<style>
+  /* ============================================================
+     TOKENS
+     ============================================================ */
+  :root {
+    --moss: #3D6B4F;
+    --moss-600: #325A41;
+    --moss-700: #284734;
+    --moss-800: #1C3324;
+    --moss-300: #6B9079;
+    --moss-100: #C7D7CD;
+    --moss-50: #EAF1ED;
+    --teal: #2F6B6B;
+    --amber: #B45309;
+    --amber-600: #92400E;
+    --amber-100: #FEF3C7;
+    --amber-50: #FFFBEB;
+    --bg: #FAFAF8;
+    --bg-soft: #F1F1EB;
+    --bg-grid: #ECECE3;
+    --ink: #0E0E0C;
+    --ink-2: #1F1F1B;
+    --ink-3: #3A3A35;
+    --sub: #555550;
+    --sub-2: #7A7A70;
+    --line: rgba(26,26,26,0.08);
+    --line-2: rgba(26,26,26,0.14);
+    --card: rgba(255,255,255,0.7);
+    --card-moss: rgba(61,107,79,0.05);
+    --card-moss-2: rgba(61,107,79,0.10);
+
+    --r-sm: 10px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 28px;
+
+    --shadow-1: 0 1px 2px rgba(20,30,25,0.04), 0 2px 6px rgba(20,30,25,0.04);
+    --shadow-2: 0 1px 2px rgba(20,30,25,0.04), 0 8px 24px rgba(20,30,25,0.06);
+    --shadow-3: 0 1px 2px rgba(20,30,25,0.04), 0 24px 48px -16px rgba(20,30,25,0.16);
+
+    --font-jp: "Noto Sans JP", "Hiragino Sans", sans-serif;
+    --font-display: "Schibsted Grotesk", "Noto Sans JP", sans-serif;
+    --font-serif: "Instrument Serif", "Noto Serif JP", serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #0c0c0c; }
+  body { font-family: var(--font-jp); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  deck-stage { background: #0c0c0c; }
+
+  /* ============================================================
+     SLIDE BASE
+     ============================================================ */
+  .slide {
+    width: 1920px; height: 1080px;
+    background: var(--bg);
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-jp);
+    font-feature-settings: "palt" 1;
+    letter-spacing: 0.03em;
+  }
+
+  .dotgrid {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(26,26,26,0.07) 1px, transparent 0);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 50%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 50%, transparent 100%);
+    pointer-events: none;
+  }
+  .meshbg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 12% 18%, rgba(61,107,79,0.18), transparent 60%),
+      radial-gradient(ellipse 40% 35% at 88% 82%, rgba(47,107,107,0.14), transparent 60%),
+      radial-gradient(ellipse 30% 25% at 50% 50%, rgba(180,83,9,0.04), transparent 60%);
+    pointer-events: none;
+  }
+
+  .progress {
+    position: absolute; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--moss) 0%, var(--teal) 100%);
+    border-radius: 0 3px 3px 0;
+    z-index: 5;
+  }
+
+  .running-header {
+    position: absolute; top: 32px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--sub); font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+    z-index: 4; pointer-events: none;
+  }
+  .running-header .l { display: flex; align-items: center; gap: 14px; }
+  .running-header .l::before {
+    content: ""; width: 6px; height: 6px; background: var(--moss); display: inline-block; transform: rotate(45deg);
+  }
+  .running-header .ix { color: var(--ink); font-weight: 600; }
+  .running-header .r { font-variant-numeric: tabular-nums; opacity: 0.65; }
+
+  .pad { position: absolute; inset: 80px 96px 80px 96px; z-index: 2; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono); font-size: 18px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--moss-700);
+    animation: fadeUp 0.4s ease-out both;
+  }
+  .eyebrow::before {
+    content: ""; width: 32px; height: 1px; background: var(--moss); display: inline-block;
+  }
+
+  .chrome {
+    position: absolute; left: 80px; right: 80px; bottom: 36px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sub-2); z-index: 4; pointer-events: none;
+  }
+
+  /* ============================================================
+     TYPOGRAPHY
+     ============================================================ */
+  h2.t-section {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 56px; line-height: 1.08; letter-spacing: -0.025em;
+    margin: 0;
+    animation: fadeUp 0.45s ease-out 0.05s both;
+  }
+  .t-serif { font-family: var(--font-serif); font-weight: 400; font-style: italic; letter-spacing: -0.01em; }
+  .it { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
+  .t-lead { font-size: 30px; line-height: 1.55; color: var(--sub); font-weight: 400; }
+  .mono { font-family: var(--font-mono); font-feature-settings: "calt" 0; }
+  .accent { color: var(--moss); }
+
+  .card {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(20px) saturate(120%);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes revealLine {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  /* Stagger entrance */
+  .s-pain .q,
+  .s-roles .role,
+  .s-steps .step,
+  .s-summary .scard,
+  .s-thesis .th-item,
+  .s-ba .ba-item {
+    animation: fadeUp 0.5s ease-out both;
+  }
+  .s-pain .q:nth-child(1), .s-roles .role:nth-child(1), .s-steps .step:nth-child(1),
+  .s-summary .scard:nth-child(1), .s-thesis .th-item:nth-child(1), .s-ba .ba-item:nth-child(1) { animation-delay: 0.05s; }
+  .s-pain .q:nth-child(2), .s-roles .role:nth-child(2), .s-steps .step:nth-child(2),
+  .s-summary .scard:nth-child(2), .s-thesis .th-item:nth-child(2), .s-ba .ba-item:nth-child(2) { animation-delay: 0.12s; }
+  .s-pain .q:nth-child(3), .s-roles .role:nth-child(3), .s-steps .step:nth-child(3),
+  .s-summary .scard:nth-child(3), .s-thesis .th-item:nth-child(3), .s-ba .ba-item:nth-child(3) { animation-delay: 0.19s; }
+  .s-pain .q:nth-child(4), .s-roles .role:nth-child(4),
+  .s-summary .scard:nth-child(4), .s-thesis .th-item:nth-child(4), .s-ba .ba-item:nth-child(4) { animation-delay: 0.26s; }
+  .s-pain .q:nth-child(5) { animation-delay: 0.33s; }
+
+  /* ============================================================
+     S-COVER
+     ============================================================ */
+  .s-cover { background: var(--bg); padding: 0; }
+  .s-cover .pad { inset: 0; padding: 0; display: block; }
+  .s-cover .cv-grid { height: 100%; display: grid; grid-template-columns: 1.45fr 1fr; }
+  .s-cover .cv-left {
+    padding: 96px 80px 80px 96px; display: flex; flex-direction: column;
+    justify-content: space-between; position: relative;
+    background:
+      radial-gradient(ellipse 80% 60% at 0% 100%, rgba(47,107,107,0.10), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 100% 0%, rgba(61,107,79,0.08), transparent 60%),
+      var(--bg);
+  }
+  .s-cover .brand-row { display: flex; align-items: center; gap: 16px; }
+  .s-cover .brand-row img { width: 56px; height: 56px; border-radius: 14px; }
+  .s-cover .brand-row .name { font-family: var(--font-display); font-size: 34px; font-weight: 700; color: var(--ink); }
+  .s-cover .brand-row .tag { font-family: var(--font-mono); font-size: 24px; color: var(--moss); letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 14px; border: 1px solid var(--moss); border-radius: 999px; margin-left: 4px; }
+  .s-cover .cv-meta {
+    font-family: var(--font-mono); font-size: 26px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--moss-700); margin: 64px 0 28px;
+    display: inline-flex; align-items: center; gap: 16px;
+    animation: fadeUp 0.5s ease-out 0.05s both;
+  }
+  .s-cover .cv-meta::before { content: ""; width: 36px; height: 1px; background: var(--moss); display: inline-block; }
+  .s-cover h1 {
+    font-family: var(--font-display);
+    font-weight: 800; font-size: 168px; line-height: 0.92; letter-spacing: -0.045em;
+    margin: 0 0 36px 0; max-width: 1100px; color: var(--ink);
+    animation: fadeUp 0.7s ease-out 0.12s both;
+  }
+  .s-cover h1 .accent { color: var(--moss); }
+  .s-cover .sub {
+    font-size: 32px; color: var(--ink-3); font-weight: 400; line-height: 1.55;
+    max-width: 820px; margin: 0;
+    animation: fadeUp 0.6s ease-out 0.25s both;
+  }
+  .s-cover .cv-foot {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 48px;
+    font-family: var(--font-mono); font-size: 26px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--sub-2);
+  }
+  .s-cover .cv-foot .seal { display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.6); color: var(--ink-3); }
+  .s-cover .cv-foot .seal .dot { width: 8px; height: 8px; background: var(--moss); border-radius: 50%; }
+  .s-cover .cv-right { background: linear-gradient(180deg, var(--moss-700) 0%, var(--moss-800) 100%); color: #fff; padding: 96px 80px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .s-cover .cv-right::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 100% 0%, rgba(255,255,255,0.06), transparent 70%), radial-gradient(circle at 30% 110%, rgba(199,215,205,0.10), transparent 60%); pointer-events: none; }
+  .s-cover .cv-right .cv-label { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.28em; color: rgba(255,255,255,0.7); text-transform: uppercase; display: inline-flex; align-items: center; gap: 14px; }
+  .s-cover .cv-right .cv-label::before { content: ""; width: 28px; height: 1px; background: rgba(255,255,255,0.5); }
+  .s-cover .cv-right .cv-quote { font-family: var(--font-serif); font-style: italic; font-size: 52px; line-height: 1.32; color: rgba(255,255,255,0.94); margin: 32px 0 0; max-width: 540px; }
+  .s-cover .cv-right .cv-quote .em { color: var(--moss-100); font-style: normal; font-family: var(--font-display); font-weight: 700; }
+  .s-cover .cv-roles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; }
+  .s-cover .cv-role { padding: 24px; border-radius: 14px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); display: flex; flex-direction: column; gap: 6px; }
+  .s-cover .cv-role .n { font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .s-cover .cv-role .nm { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #fff; }
+  .s-cover .cv-role .ja { font-size: 24px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+  .s-cover .cv-divider { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.14); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); text-transform: uppercase; white-space: nowrap; }
+
+  /* ============================================================
+     S-PAIN
+     ============================================================ */
+  .s-pain .quotes {
+    display: flex; flex-direction: column; gap: 0; margin-top: 40px;
+  }
+  .s-pain .q {
+    padding: 32px 0; border-bottom: 1px solid var(--line);
+    font-size: 30px; color: var(--ink-3); line-height: 1.55;
+    display: flex; align-items: flex-start; gap: 28px;
+    opacity: 0.65; transition: opacity 0.3s;
+  }
+  .s-pain .q .mark {
+    font-family: var(--font-serif); font-size: 56px; line-height: 0.8;
+    color: var(--moss-300); flex-shrink: 0; margin-top: 4px;
+  }
+  .s-pain .q:last-child .mark { color: var(--amber); }
+  .s-pain .q:last-child { opacity: 1; color: var(--ink); font-weight: 500; border-bottom: none; }
+
+  /* ============================================================
+     S-THESIS — New: 持論スライド（ゴール設定 & 継続）
+     ============================================================ */
+  .s-thesis .th-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px;
+  }
+  .s-thesis .th-item {
+    padding: 48px 36px; border-radius: var(--r-xl);
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+    display: flex; flex-direction: column; gap: 18px; min-height: 500px;
+    position: relative;
+  }
+  .s-thesis .th-item .th-num {
+    font-family: var(--font-display); font-size: 64px; font-weight: 800;
+    line-height: 1; color: var(--moss); opacity: 0.2;
+  }
+  .s-thesis .th-item h3 {
+    font-size: 28px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--ink);
+  }
+  .s-thesis .th-item .th-desc {
+    font-size: 19px; line-height: 1.7; color: var(--sub);
+  }
+  .s-thesis .th-item .th-arrow {
+    margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 16px; color: var(--moss); font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Accent variant for the "answer" item */
+  .s-thesis .th-item.th-answer {
+    background: linear-gradient(180deg, rgba(61,107,79,0.08), rgba(61,107,79,0.02));
+    border: 2px solid var(--moss);
+    box-shadow: var(--shadow-2);
+  }
+  .s-thesis .th-item.th-answer .th-num { color: var(--moss); opacity: 0.35; }
+  .s-thesis .th-item.th-answer h3 { color: var(--moss-700); }
+
+  /* ============================================================
+     S-WHY
+     ============================================================ */
+  .s-why {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 45%, rgba(61,107,79,0.06), transparent 60%),
+      var(--bg);
+  }
+  .s-why .pad {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; gap: 0;
+  }
+  .s-why .en-why {
+    font-family: var(--font-serif); font-style: italic; font-size: 42px;
+    color: var(--moss); letter-spacing: 0.01em; line-height: 1.35;
+    max-width: 1200px; margin-bottom: 48px;
+  }
+  .s-why .jp-why {
+    font-size: 36px; color: var(--ink-2); font-weight: 500; line-height: 1.65;
+    max-width: 900px; margin-bottom: 64px;
+  }
+  .s-why .mission-box {
+    padding: 40px 64px; border-radius: var(--r-xl);
+    background: rgba(61,107,79,0.05); border: 1px solid rgba(61,107,79,0.15);
+    max-width: 1100px;
+  }
+  .s-why .mission-box .lbl {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--moss); margin-bottom: 16px;
+  }
+  .s-why .mission-box p {
+    font-size: 26px; color: var(--ink-2); line-height: 1.65; margin: 0;
+  }
+
+  /* ============================================================
+     S-BRIDGE — New: 「だからこう設計した」
+     ============================================================ */
+  .s-bridge {
+    background: linear-gradient(135deg, var(--moss-700) 0%, var(--moss) 55%, var(--moss-600) 100%);
+    color: white;
+  }
+  .s-bridge::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 50%, transparent 100%);
+    pointer-events: none;
+  }
+  .s-bridge .bridge-pad {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0 160px; z-index: 2;
+  }
+  .s-bridge .bridge-eyebrow {
+    font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.7); text-transform: uppercase;
+    display: flex; align-items: center; gap: 18px; margin-bottom: 48px;
+  }
+  .s-bridge h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 100px; line-height: 1.1; letter-spacing: -0.035em;
+    margin: 0; color: white;
+    animation: slideInLeft 0.5s ease-out 0.15s both;
+  }
+  .s-bridge h1 .it { color: var(--moss-100); }
+  .s-bridge .bridge-sub {
+    margin-top: 40px; font-size: 28px; line-height: 1.6; color: rgba(255,255,255,0.78);
+    max-width: 1100px; border-left: 2px solid rgba(255,255,255,0.3); padding-left: 24px;
+  }
+  .s-bridge .bridge-sub::after {
+    content: "";
+    display: block;
+    width: 120px; height: 3px;
+    background: rgba(255,255,255,0.35);
+    margin-top: 48px;
+    border-radius: 2px;
+    animation: revealLine 0.6s ease-out 0.3s both;
+    transform-origin: left;
+  }
+  .s-bridge .chrome { color: rgba(255,255,255,0.25); }
+
+  /* ============================================================
+     S-ROLES
+     ============================================================ */
+  .s-roles .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .s-roles .role {
+    padding: 44px 36px; border-radius: var(--r-xl); min-height: 440px;
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+    display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden;
+  }
+  .s-roles .role.hero-role {
+    background: linear-gradient(180deg, var(--moss), var(--moss-700));
+    color: white; border-color: var(--moss-700);
+    box-shadow: 0 24px 48px -12px rgba(61,107,79,0.35);
+  }
+  .s-roles .role .tag {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--moss); font-weight: 600;
+  }
+  .s-roles .role.hero-role .tag { color: rgba(255,255,255,0.7); }
+  .s-roles .role h3 { font-size: 28px; font-weight: 800; margin: 0; line-height: 1.3; }
+  .s-roles .role .desc { font-size: 17px; line-height: 1.6; color: var(--sub); }
+  .s-roles .role.hero-role .desc { color: rgba(255,255,255,0.75); }
+
+  /* ============================================================
+     S-DETAIL — Role detail (2-column)
+     ============================================================ */
+  .s-detail .cols2 {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; margin-top: 48px;
+    align-items: start;
+  }
+  .s-detail .sub-list { display: flex; flex-direction: column; gap: 24px; }
+  .s-detail .sub-item {
+    padding: 24px 28px; border-radius: var(--r-lg);
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+    box-shadow: var(--shadow-1);
+  }
+  .s-detail .sub-item h4 { font-size: 20px; font-weight: 700; margin: 0 0 8px 0; color: var(--ink); }
+  .s-detail .sub-item p { font-size: 17px; line-height: 1.6; color: var(--sub); margin: 0; }
+
+  /* Role mockups */
+  .s-detail .role-mock {
+    padding: 40px 36px; border-radius: var(--r-xl);
+    color: #fff; display: flex; flex-direction: column; gap: 22px;
+    box-shadow: 0 24px 48px -12px rgba(61,107,79,0.35);
+    min-height: 640px; position: relative; overflow: hidden;
+  }
+  .s-detail .role-mock .rm-tag {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+  }
+  .s-detail .role-mock .rm-title {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 800; line-height: 1.2; margin: 0;
+  }
+  .s-detail .role-mock .rm-desc {
+    font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.78); margin: 0;
+  }
+  .s-detail .role-mock .rm-stage {
+    flex: 1; display: flex; flex-direction: column;
+    background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px; padding: 20px;
+    position: relative;
+  }
+  .s-detail .role-mock .rm-stage-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-mono); font-size: 14px;
+    color: rgba(255,255,255,0.6); letter-spacing: 0.18em; text-transform: uppercase;
+  }
+
+  /* Coach chat */
+  .s-detail .rm-coach { background: linear-gradient(180deg, var(--moss), var(--moss-700)); }
+  .s-detail .rm-coach .rm-stage { gap: 12px; }
+  .s-detail .rm-coach .bubble {
+    max-width: 82%; padding: 14px 18px; border-radius: 16px;
+    font-size: 15px; line-height: 1.55;
+  }
+  .s-detail .rm-coach .bubble.ai {
+    background: rgba(255,255,255,0.95); color: var(--ink);
+    align-self: flex-start; border-bottom-left-radius: 6px;
+  }
+  .s-detail .rm-coach .bubble.user {
+    background: rgba(255,255,255,0.12); color: #fff;
+    border: 1px solid rgba(255,255,255,0.18);
+    align-self: flex-end; border-bottom-right-radius: 6px;
+  }
+  .s-detail .rm-coach .who {
+    display: block; font-size: 14px; letter-spacing: 0.2em;
+    text-transform: uppercase; opacity: 0.5; margin-bottom: 4px; font-weight: 600;
+  }
+  .s-detail .rm-coach .typing {
+    align-self: flex-start; padding: 14px 20px; border-radius: 16px;
+    background: rgba(255,255,255,0.95); display: inline-flex; gap: 6px;
+  }
+  .s-detail .rm-coach .typing i {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--moss);
+    animation: rm-typing 1.2s infinite ease-in-out;
+  }
+  .s-detail .rm-coach .typing i:nth-child(2) { animation-delay: 0.15s; }
+  .s-detail .rm-coach .typing i:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes rm-typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  /* Architect roadmap */
+  .s-detail .rm-architect { background: linear-gradient(180deg, #2a4d3a 0%, #182f23 100%); }
+  .s-detail .rm-architect .rm-stage { gap: 0; padding: 24px 28px; }
+  .s-detail .rm-architect .rmap { position: relative; padding-left: 14px; }
+  .s-detail .rm-architect .rmap::before {
+    content: ""; position: absolute; left: 27px; top: 16px; bottom: 16px; width: 2px;
+    background: linear-gradient(180deg, rgba(200,224,201,0.7) 0%, rgba(200,224,201,0.7) 50%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.12) 100%);
+  }
+  .s-detail .rm-architect .ms {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: 16px; align-items: center;
+    padding: 11px 0; position: relative;
+  }
+  .s-detail .rm-architect .ms .dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #182f23; border: 2px solid rgba(255,255,255,0.25);
+    display: grid; place-items: center;
+    font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 700; z-index: 1;
+  }
+  .s-detail .rm-architect .ms.done .dot { background: var(--moss); border-color: var(--moss); color: #fff; }
+  .s-detail .rm-architect .ms.cur .dot {
+    background: #fff; border-color: #fff; color: var(--moss-700);
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.18);
+  }
+  .s-detail .rm-architect .ms .label { font-size: 16px; color: rgba(255,255,255,0.72); font-weight: 500; }
+  .s-detail .rm-architect .ms.done .label { color: rgba(255,255,255,0.55); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.3); }
+  .s-detail .rm-architect .ms.cur .label { color: #fff; font-weight: 700; font-size: 17px; }
+  .s-detail .rm-architect .ms.locked .label { color: rgba(255,255,255,0.4); }
+  .s-detail .rm-architect .ms .meta {
+    font-family: var(--font-mono); font-size: 14px;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .s-detail .rm-architect .ms.cur .meta {
+    background: rgba(255,255,255,0.95); color: var(--moss-700);
+    padding: 3px 10px; border-radius: 999px; font-weight: 700;
+  }
+
+  /* Tutor streaming */
+  .s-detail .rm-tutor { background: linear-gradient(180deg, #2F6B6B, #1E4848); }
+  .s-detail .rm-tutor .rm-stage { gap: 16px; padding: 22px 24px; }
+  .s-detail .rm-tutor .doc-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .s-detail .rm-tutor .doc-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #fff; margin: 0 0 4px; }
+  .s-detail .rm-tutor .doc-meta { font-family: var(--font-mono); font-size: 14px; color: rgba(255,255,255,0.55); letter-spacing: 0.18em; text-transform: uppercase; }
+  .s-detail .rm-tutor .doc-body {
+    flex: 1; display: flex; flex-direction: column; gap: 10px;
+    font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.88);
+  }
+  .s-detail .rm-tutor .doc-body p { margin: 0; }
+  .s-detail .rm-tutor .doc-body .h { color: #fff; font-weight: 700; font-size: 16px; margin-top: 6px; }
+  .s-detail .rm-tutor .cursor {
+    display: inline-block; width: 10px; height: 18px;
+    background: rgba(255,255,255,0.85); vertical-align: text-bottom;
+    margin-left: 2px; animation: rm-cursor 1s infinite step-end;
+  }
+  @keyframes rm-cursor { 50% { opacity: 0; } }
+  .s-detail .rm-tutor .audio {
+    margin-top: 10px;
+    background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 12px 16px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .s-detail .rm-tutor .audio .play { width: 32px; height: 32px; border-radius: 50%; background: #fff; color: #2F6B6B; display: grid; place-items: center; flex-shrink: 0; }
+  .s-detail .rm-tutor .audio .wave { flex: 1; display: flex; align-items: center; gap: 3px; height: 28px; }
+  .s-detail .rm-tutor .audio .wave i { flex: 1; background: rgba(255,255,255,0.55); border-radius: 2px; }
+  .s-detail .rm-tutor .audio .wave i.act { background: #fff; }
+  .s-detail .rm-tutor .audio .time { font-family: var(--font-mono); font-size: 14px; color: rgba(255,255,255,0.7); letter-spacing: 0.08em; }
+
+  /* Companion welcome */
+  .s-detail .rm-companion { background: linear-gradient(180deg, var(--teal), #1E4848); }
+  .s-detail .rm-companion .rm-stage { gap: 18px; padding: 26px; justify-content: space-between; }
+  .s-detail .rm-companion .welcome {
+    background: rgba(255,255,255,0.96); color: var(--ink);
+    border-radius: 16px; padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    box-shadow: 0 14px 28px -10px rgba(0,0,0,0.3);
+  }
+  .s-detail .rm-companion .welcome .row { display: flex; align-items: center; gap: 14px; }
+  .s-detail .rm-companion .welcome .av {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--moss), var(--teal));
+    color: #fff; display: grid; place-items: center;
+    font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  }
+  .s-detail .rm-companion .welcome .greet { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--ink); }
+  .s-detail .rm-companion .welcome .since { font-family: var(--font-mono); font-size: 14px; color: var(--sub-2); letter-spacing: 0.15em; text-transform: uppercase; }
+  .s-detail .rm-companion .welcome .msg { font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+  .s-detail .rm-companion .streak-card {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 16px; padding: 18px 22px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+  }
+  .s-detail .rm-companion .streak-card .num { font-family: var(--font-display); font-size: 32px; font-weight: 800; color: #fff; line-height: 1; }
+  .s-detail .rm-companion .streak-card .lab { font-family: var(--font-mono); font-size: 14px; color: rgba(255,255,255,0.55); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 4px; }
+  .s-detail .rm-companion .streak-card .protect {
+    font-family: var(--font-mono); font-size: 14px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 10px; border-radius: 999px; color: #fff;
+    letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap;
+  }
+  .s-detail .rm-companion .actions { display: flex; gap: 10px; }
+  .s-detail .rm-companion .actions .btn {
+    flex: 1; padding: 12px 16px; border-radius: 12px;
+    font-size: 14px; font-weight: 600; text-align: center;
+    background: rgba(255,255,255,0.95); color: var(--moss-700);
+  }
+  .s-detail .rm-companion .actions .btn.ghost {
+    background: transparent; color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  /* ============================================================
+     S-TARGET
+     ============================================================ */
+  .s-target .pgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+  .s-target .pcol { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .s-target .pabs {
+    padding: 18px 22px; border-radius: var(--r-md);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .s-target .pabs.core { background: var(--moss-50); border-color: var(--moss-300); }
+  .s-target .pabs .ano { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--moss-700); font-weight: 700; }
+  .s-target .pabs h4 { margin: 0; font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+  .s-target .pabs .adesc { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+  .s-target .pcard {
+    padding: 0; border-radius: var(--r-xl); overflow: hidden;
+    background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-1);
+    display: flex; flex-direction: column; min-height: 360px;
+  }
+  .s-target .pcard.core { border: 2px solid var(--moss); box-shadow: var(--shadow-2); }
+  .s-target .pcard .phead {
+    padding: 18px 24px 16px; display: flex; gap: 14px; align-items: center;
+    background: linear-gradient(180deg, var(--moss-50), rgba(255,255,255,0));
+    border-bottom: 1px solid var(--line);
+  }
+  .s-target .pcard.core .phead {
+    background: linear-gradient(180deg, var(--moss-700), var(--moss-800)); color: #fff;
+    border-bottom: none;
+  }
+  .s-target .pcard .av {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--moss-300), var(--moss-700));
+    color: #fff; display: grid; place-items: center; flex-shrink: 0;
+    font-family: var(--font-display); font-size: 22px; font-weight: 800;
+  }
+  .s-target .pcard.core .av { background: #fff; color: var(--moss-700); }
+  .s-target .pcard .who { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .s-target .pcard .nm { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1.1; }
+  .s-target .pcard.core .nm { color: #fff; }
+  .s-target .pcard .age { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub-2); }
+  .s-target .pcard.core .age { color: rgba(255,255,255,0.6); }
+  .s-target .pcard .pbody { padding: 20px 24px 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .s-target .pcard .pinfo {
+    display: grid; grid-template-columns: auto 1fr; gap: 6px 12px;
+    font-size: 13px; line-height: 1.5;
+  }
+  .s-target .pcard .pinfo .k { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub-2); padding-top: 3px; }
+  .s-target .pcard .pinfo .v { color: var(--ink-2); }
+  .s-target .pcard .pinfo .v b { color: var(--ink); font-weight: 700; }
+  .s-target .pcard.core .pbody { background: linear-gradient(180deg, var(--moss-700), var(--moss-800)); }
+  .s-target .pcard.core .pinfo .k { color: rgba(255,255,255,0.55); }
+  .s-target .pcard.core .pinfo .v { color: rgba(255,255,255,0.85); }
+  .s-target .pcard.core .pinfo .v b { color: #fff; }
+  .s-target .pcard .pquote {
+    margin-top: auto; padding: 16px 18px;
+    background: var(--bg-soft); border-radius: var(--r-md);
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 16px; color: var(--ink-3); line-height: 1.5;
+  }
+  .s-target .pcard.core .pquote { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.12); }
+  .s-target .pfoot {
+    margin-top: 18px; display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; border-radius: var(--r-md);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    font-size: 15px; color: var(--ink-3);
+  }
+  .s-target .pfoot .l { display: flex; align-items: center; gap: 12px; }
+  .s-target .pfoot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--moss); }
+  .s-target .pfoot b { color: var(--ink); font-weight: 700; }
+
+  /* ============================================================
+     S-STEPS
+     ============================================================ */
+  .s-steps .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+  .s-steps .step {
+    padding: 48px 40px; border-radius: var(--r-xl); min-height: 520px;
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+    display: flex; flex-direction: column; gap: 20px; position: relative;
+  }
+  .s-steps .step .num {
+    font-family: var(--font-display); font-size: 72px; font-weight: 800; line-height: 1;
+    color: var(--moss); letter-spacing: -0.04em; opacity: 0.35;
+  }
+  .s-steps .step h3 { font-size: 30px; font-weight: 800; margin: 0; line-height: 1.3; }
+  .s-steps .step .desc { font-size: 18px; line-height: 1.65; color: var(--sub); }
+  .phone-frame {
+    margin-top: auto; height: 280px; width: 140px;
+    border-radius: 20px; border: 4px solid #222;
+    background: white; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    position: relative; align-self: center;
+  }
+  .phone-frame::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 48px; height: 4px; background: #222; border-radius: 0 0 4px 4px; z-index: 2;
+  }
+  .phone-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* ============================================================
+     S-HOME
+     ============================================================ */
+  .s-home .home-grid {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; margin-top: 32px; align-items: stretch;
+  }
+  .s-home .today-mock {
+    padding: 32px 32px 28px; border-radius: var(--r-xl);
+    background: white; border: 1px solid var(--line); box-shadow: var(--shadow-2);
+    display: flex; flex-direction: column;
+  }
+  .s-home .today-mock .tm-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 14px; border-bottom: 1px solid var(--line-2); margin-bottom: 18px;
+  }
+  .s-home .today-mock .tm-greet { font-size: 15px; color: var(--sub); font-family: var(--font-mono); letter-spacing: 0.08em; }
+  .s-home .today-mock .tm-streak {
+    font-family: var(--font-mono); font-size: 13px; color: var(--moss);
+    background: var(--card-moss); padding: 4px 10px; border-radius: 999px; font-weight: 600;
+  }
+  .s-home .today-mock .tm-title { font-family: var(--font-display); font-size: 34px; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .s-home .today-mock .tm-sub { font-size: 15px; color: var(--sub); margin-bottom: 20px; }
+  .s-home .today-mock .tm-action {
+    display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+    border-radius: var(--r-md); background: rgba(255,255,255,0.6);
+    border: 1.5px solid var(--line); margin-bottom: 10px;
+  }
+  .s-home .today-mock .tm-action.tm-now {
+    background: linear-gradient(180deg, rgba(61,107,79,0.08), rgba(61,107,79,0.02));
+    border-color: var(--moss);
+  }
+  .s-home .today-mock .tm-action .tm-check {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--line-2); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-weight: 700;
+  }
+  .s-home .today-mock .tm-action.tm-done .tm-check { background: var(--moss); border-color: var(--moss); color: white; }
+  .s-home .today-mock .tm-action.tm-now .tm-check { border-color: var(--moss); color: var(--moss); }
+  .s-home .today-mock .tm-text { flex: 1; }
+  .s-home .today-mock .tm-action .tm-act { font-size: 17px; font-weight: 600; color: var(--ink); margin: 0 0 2px 0; }
+  .s-home .today-mock .tm-action.tm-done .tm-act { color: var(--sub-2); text-decoration: line-through; }
+  .s-home .today-mock .tm-action .tm-meta { font-size: 13px; color: var(--sub); }
+  .s-home .today-mock .tm-action .tm-pill {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.1em; font-weight: 600;
+    color: var(--moss); padding: 4px 10px; border-radius: 999px; background: var(--card-moss);
+    flex-shrink: 0;
+  }
+  .s-home .today-mock .tm-foot {
+    margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between;
+    font-size: 13px; color: var(--sub);
+  }
+  .s-home .home-msg { display: flex; flex-direction: column; gap: 18px; }
+  .s-home .home-msg .msg-hero {
+    padding: 32px 36px; border-radius: var(--r-xl);
+    background: var(--moss-700); color: white; box-shadow: 0 12px 28px rgba(31,58,42,0.18);
+  }
+  .s-home .home-msg .msg-hero .lbl {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.6); font-weight: 600; margin-bottom: 14px;
+  }
+  .s-home .home-msg .msg-hero .ph {
+    font-family: var(--font-display); font-size: 32px; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em;
+  }
+  .s-home .home-msg .msg-hero .ph .em { color: #f5d28a; font-style: italic; }
+  .s-home .home-msg .msg-hero .ph del { color: rgba(255,255,255,0.45); text-decoration-thickness: 2px; }
+  .s-home .home-pts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .s-home .home-pt {
+    padding: 20px 22px; border-radius: var(--r-lg);
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+  }
+  .s-home .home-pt .pt-num { font-family: var(--font-display); font-size: 28px; font-weight: 800; line-height: 1; color: var(--moss); letter-spacing: -0.02em; margin-bottom: 6px; }
+  .s-home .home-pt .pt-lbl { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .s-home .home-pt .pt-desc { font-size: 13px; color: var(--sub); line-height: 1.5; }
+
+  /* ============================================================
+     S-BA — New: Before → After
+     ============================================================ */
+  .s-ba .ba-grid {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-top: 56px; align-items: stretch;
+  }
+  .s-ba .ba-col {
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .s-ba .ba-item {
+    padding: 32px 36px; border-radius: var(--r-xl);
+    display: flex; flex-direction: column; gap: 10px; min-height: 160px;
+  }
+  .s-ba .ba-item h4 { font-size: 22px; font-weight: 700; margin: 0; line-height: 1.3; }
+  .s-ba .ba-item .ba-desc { font-size: 17px; line-height: 1.6; }
+  .s-ba .ba-before .ba-item {
+    background: var(--bg-soft); border: 1px solid var(--line);
+  }
+  .s-ba .ba-before .ba-item h4 { color: var(--sub); }
+  .s-ba .ba-before .ba-item .ba-desc { color: var(--sub-2); }
+  .s-ba .ba-after .ba-item {
+    background: linear-gradient(180deg, rgba(61,107,79,0.08), rgba(61,107,79,0.02));
+    border: 1.5px solid rgba(61,107,79,0.22);
+    box-shadow: var(--shadow-1);
+  }
+  .s-ba .ba-after .ba-item h4 { color: var(--moss-700); }
+  .s-ba .ba-after .ba-item .ba-desc { color: var(--ink-2); }
+  .s-ba .ba-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 32px;
+    font-family: var(--font-display); font-size: 64px; font-weight: 800;
+    color: var(--moss-300);
+  }
+  .s-ba .ba-label {
+    font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.25em;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 8px;
+  }
+  .s-ba .ba-before .ba-label { color: var(--sub-2); }
+  .s-ba .ba-after .ba-label { color: var(--moss); }
+
+  /* ============================================================
+     S-SUMMARY
+     ============================================================ */
+  .s-summary .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .s-summary .scard {
+    padding: 44px 36px; border-radius: var(--r-xl); min-height: 420px;
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .s-summary .scard .num {
+    font-family: var(--font-display); font-weight: 800; font-size: 56px;
+    line-height: 1; letter-spacing: -0.04em; color: var(--moss);
+  }
+  .s-summary .scard h3 { font-size: 24px; font-weight: 700; margin: 0; }
+  .s-summary .scard .desc { font-size: 17px; line-height: 1.6; color: var(--sub); margin-top: 0; }
+
+  /* ============================================================
+     S-CTA
+     ============================================================ */
+  .s-cta {
+    background: linear-gradient(180deg, var(--moss-800) 0%, var(--moss-700) 100%);
+    color: white;
+  }
+  .s-cta .cta-pad {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 96px; z-index: 2;
+  }
+  .s-cta .en {
+    font-family: var(--font-serif); font-style: italic; font-size: 36px;
+    color: rgba(255,255,255,0.6); margin-bottom: 16px;
+  }
+  .s-cta h1 {
+    font-family: var(--font-display); font-weight: 800; font-size: 88px;
+    line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 56px;
+  }
+  .s-cta .cta-links {
+    display: flex; align-items: flex-start; gap: 56px; margin-bottom: 40px;
+  }
+  .s-cta .cta-link-item {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .s-cta .cta-link-label {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+  }
+  .s-cta .cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 18px 40px; border-radius: 999px;
+    background: white; color: var(--moss-700);
+    font-family: var(--font-display); font-size: 20px; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.02em;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .s-cta .cta-btn:hover { transform: translateY(-2px); }
+  .s-cta .cta-btn-outline {
+    background: transparent; color: white;
+    border: 2px solid rgba(255,255,255,0.4);
+    box-shadow: none;
+  }
+  .s-cta .cta-sub {
+    font-size: 16px; color: rgba(255,255,255,0.5);
+    font-family: var(--font-mono); letter-spacing: 0.1em;
+  }
+  .s-cta .brand-row {
+    position: absolute; bottom: 40px;
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--font-display); font-size: 18px; font-weight: 600;
+    color: rgba(255,255,255,0.5);
+  }
+  .s-cta .brand-row img { width: 36px; height: 36px; border-radius: 10px; opacity: 0.7; }
+
+  @media print {
+    .slide { page-break-after: always; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+<!-- ============================================================
+     SLIDE 0 — Cover
+     ============================================================ -->
+<section class="slide s-cover" data-label="Cover">
+  <div class="dotgrid"></div>
+  <div class="meshbg"></div>
+  <div class="pad">
+    <div class="cv-grid">
+      <div class="cv-left">
+        <div class="brand-row">
+          <img src="assets/navily-logo.png" alt="Navily" />
+          <span class="name">Navily</span>
+          <span class="tag">AI Coach</span>
+        </div>
+        <div>
+          <div class="cv-meta">Product Overview · 2026</div>
+          <h1>やりたいことは<br><span class="accent">ある。</span></h1>
+          <p class="sub">何から始めればいいか、わからない。<br>その一歩を、一緒に踏み出す。</p>
+        </div>
+        <div class="cv-foot">
+          <span class="seal"><span class="dot"></span>17 slides</span>
+        </div>
+      </div>
+      <div class="cv-right">
+        <div>
+          <span class="cv-label">AI Coach · 4 Roles</span>
+          <p class="cv-quote">あなたの<span class="em">ビジョン</span>は、<br><span class="em">形にできる</span>。</p>
+        </div>
+        <div>
+          <div class="cv-roles">
+            <div class="cv-role"><span class="n">01</span><span class="nm">Coach</span><span class="ja">ゴールを見つける</span></div>
+            <div class="cv-role"><span class="n">02</span><span class="nm">Architect</span><span class="ja">道筋を設計する</span></div>
+            <div class="cv-role"><span class="n">03</span><span class="nm">Tutor</span><span class="ja">教材を生成する</span></div>
+            <div class="cv-role"><span class="n">04</span><span class="nm">Companion</span><span class="ja">毎日伴走する</span></div>
+          </div>
+          <div class="cv-divider"><span>Penly — Your AI Coach</span><span>Navily / 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 1 — Pain (共感)
+     ============================================================ -->
+<section class="slide s-pain" data-label="Pain">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:6.25%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">01 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Pain</div>
+    <h2 class="t-section" style="margin-top:24px;">こんな経験、ないですか</h2>
+    <div class="quotes">
+      <div class="q">
+        <span class="mark">&#x201C;</span>
+        <span>Udemy買ったけど、3日で開かなくなった。</span>
+      </div>
+      <div class="q">
+        <span class="mark">&#x201C;</span>
+        <span>本を買って読み始めたけど、自分の仕事にどう活かすかわからなかった。</span>
+      </div>
+      <div class="q">
+        <span class="mark">&#x201C;</span>
+        <span>YouTube見たけど、自分の状況にあてはまらなかった。</span>
+      </div>
+      <div class="q">
+        <span class="mark">&#x201C;</span>
+        <span>ChatGPTに聞いても、先週話したことを覚えていない。</span>
+      </div>
+      <div class="q">
+        <span class="mark">&#x201C;</span>
+        <span>コーチに相談したいけど、月3万は払えない。</span>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>01</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 2 — なぜゴールが見えないのか（持論）
+     ============================================================ -->
+<section class="slide s-thesis" data-label="Why Goals Fail">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:12.5%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">02 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Why</div>
+    <h2 class="t-section" style="margin-top:24px;">なぜ、ゴールが見えないのか</h2>
+    <div class="th-grid">
+      <div class="th-item">
+        <span class="th-num">01</span>
+        <h3>言語化が<br>難しい</h3>
+        <p class="th-desc">「どうなりたいか」を自分の言葉にできない。頭の中にぼんやりあるのに、形にならない。</p>
+        <div class="th-arrow">&#8594; だから対話で引き出す</div>
+      </div>
+      <div class="th-item">
+        <span class="th-num">02</span>
+        <h3>忙しくて<br>忘れる</h3>
+        <p class="th-desc">仕事に追われて「考える時間」が取れない。やりたいことがあったはずなのに、いつの間にか消えている。</p>
+        <div class="th-arrow">&#8594; だから仕組みで思い出す</div>
+      </div>
+      <div class="th-item">
+        <span class="th-num">03</span>
+        <h3>変わらない方が<br>楽</h3>
+        <p class="th-desc">現状維持バイアス。頑張りたいのに「まあいいか」に負ける。自己実現したい気持ちと、動かない日常の葛藤。</p>
+        <div class="th-arrow">&#8594; だから最初の一歩を小さくする</div>
+      </div>
+      <div class="th-item th-answer">
+        <span class="th-num">&#10003;</span>
+        <h3>本当は、<br>変わりたい</h3>
+        <p class="th-desc">意志がないんじゃない。ゴールが見えないだけ。見えれば、人は動き出す。</p>
+        <div class="th-arrow">&#8594; Navilyはここから始める</div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>02</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 3 — なぜ学びは続かないのか（持論）
+     ============================================================ -->
+<section class="slide s-thesis" data-label="Why Learning Fails">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:18.75%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">03 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Why</div>
+    <h2 class="t-section" style="margin-top:24px;">なぜ、学びは続かないのか</h2>
+    <div class="th-grid">
+      <div class="th-item">
+        <span class="th-num">01</span>
+        <h3>「今日は<br>いいか」</h3>
+        <p class="th-desc">毎日の小さな先延ばしが積もる。「明日やろう」が1週間、そして半年になる。</p>
+        <div class="th-arrow">&#8594; 毎日のアクションを自動提案</div>
+      </div>
+      <div class="th-item">
+        <span class="th-num">02</span>
+        <h3>ゴールと<br>今日が繋がらない</h3>
+        <p class="th-desc">「PMになりたい」のに今日やるのは「JavaScript基礎」。その意味が見えないと、やる気が消える。</p>
+        <div class="th-arrow">&#8594; ゴールから逆算した道筋</div>
+      </div>
+      <div class="th-item">
+        <span class="th-num">03</span>
+        <h3>進捗が<br>見えない</h3>
+        <p class="th-desc">あとどれくらいでゴールに着くのかが不明。永遠にスタート地点にいる感覚。達成感がない。</p>
+        <div class="th-arrow">&#8594; マイルストーンで可視化</div>
+      </div>
+      <div class="th-item">
+        <span class="th-num">04</span>
+        <h3>迷っても<br>相談できない</h3>
+        <p class="th-desc">「これで合ってる？」「方向転換すべき？」を聞ける人がいない。一人で迷って、止まる。</p>
+        <div class="th-arrow">&#8594; いつでも対話できるAIコーチ</div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>03</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 4 — だから、こう設計した（橋渡し）
+     ============================================================ -->
+<section class="slide s-bridge" data-label="Bridge">
+  <div class="progress" style="width:25%"></div>
+  <div class="bridge-pad">
+    <div class="bridge-eyebrow">Our Approach</div>
+    <h1>だから、<br>こう<span class="it"> 設計 </span>した。</h1>
+    <p class="bridge-sub">対話でビジョンを明確にして、あなた専用の道筋と教材を作り、<br>毎日隣で歩く。</p>
+  </div>
+  <div class="chrome" style="color:rgba(255,255,255,0.25);"><span>Navily</span><span>04</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 5 — WHY / 製品思想
+     ============================================================ -->
+<section class="slide s-why" data-label="WHY">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:31.25%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">05 / 17</span></div>
+  <div class="pad">
+    <p class="en-why">"We believe in your vision.<br>We believe it can take shape."</p>
+    <p class="jp-why">あなたのビジョンを信じている。<br>それは、形にできる。</p>
+    <div class="mission-box">
+      <p class="lbl">Mission</p>
+      <p>ポテンシャルが価値に変換される社会をつくる。</p>
+      <p style="margin-top:20px; font-size:22px; color:var(--sub);">プロダクト約束: 学びたいものを、学びたい順で、なりたい自分に最短距離で近づける。</p>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>05</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 6 — 4 AI Roles
+     ============================================================ -->
+<section class="slide s-roles" data-label="4 AI Roles">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:37.5%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">06 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">4 AI Roles</div>
+    <h2 class="t-section" style="margin-top:24px;">4つの役割が「伴走」に統合される</h2>
+    <div class="grid4">
+      <div class="role hero-role">
+        <span class="tag">Coach</span>
+        <h3>ありたい姿を<br>一緒に見つける</h3>
+        <p class="desc">対話でゴール・現在地を明確にする。ぼんやりした不安に輪郭を与える。</p>
+      </div>
+      <div class="role">
+        <span class="tag">Architect</span>
+        <h3>ゴールから<br>道筋を引く</h3>
+        <p class="desc">パーソナライズされた学習ロードマップを自動生成。最大15コース。</p>
+      </div>
+      <div class="role">
+        <span class="tag">Tutor</span>
+        <h3>一緒に学ぶ<br>教材を用意する</h3>
+        <p class="desc">テキスト+音声の教材をリアルタイム生成。あなたの文脈に合った内容。</p>
+      </div>
+      <div class="role">
+        <span class="tag">Companion</span>
+        <h3>毎日、<br>隣にいる</h3>
+        <p class="desc">チェックイン、振り返り、進捗可視化。やめても「おかえりなさい」。</p>
+      </div>
+    </div>
+    <p style="margin-top:32px; font-size:20px; color:var(--sub); text-align:center;">この4つを一貫体験として提供するプロダクトは、まだない。</p>
+  </div>
+  <div class="chrome"><span>Navily</span><span>06</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 7 — Coach詳細
+     ============================================================ -->
+<section class="slide s-detail" data-label="Coach Detail">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:43.75%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">07 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Coach</div>
+    <div class="cols2">
+      <div class="role-mock rm-coach">
+        <span class="rm-tag">Role 01 — Coach</span>
+        <h3 class="rm-title">ゴールを一緒に<br>見つける</h3>
+        <p class="rm-desc">「なんとなく変わりたい」を、10ターンの対話で具体的なゴールに変える。</p>
+        <div class="rm-stage">
+          <div class="rm-stage-head"><span>Penri × You</span><span>Turn 7 / 10</span></div>
+          <div class="bubble ai"><span class="who">Penri</span>「変わりたい」って、いまの仕事の何が一番引っかかってますか？</div>
+          <div class="bubble user"><span class="who">You</span>裁量がない。決められたことしかやらせてもらえない。</div>
+          <div class="bubble ai"><span class="who">Penri</span>裁量を持てる職種って、たとえばPM・デザイナー・起業——どれが一番ピンときます？</div>
+          <div class="typing"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="sub-list">
+        <div class="sub-item">
+          <h4>Type A: ゴールが未確定</h4>
+          <p>「何を目指したいか」から一緒に探る。キャリアの棚卸し、価値観の整理を対話で。</p>
+        </div>
+        <div class="sub-item">
+          <h4>Type B: スキルパスが不明</h4>
+          <p>「PMになりたい」はある。でも何から手をつけるか見えない。その道筋を一緒に描く。</p>
+        </div>
+        <div class="sub-item">
+          <h4>10ターンの深掘り</h4>
+          <p>表面的な質問で終わらない。現在地とゴールの差分を、対話の中で明確にしていく。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>07</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 8 — Architect詳細
+     ============================================================ -->
+<section class="slide s-detail" data-label="Architect Detail">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:50%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">08 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Architect</div>
+    <div class="cols2">
+      <div class="role-mock rm-architect">
+        <span class="rm-tag">Role 02 — Architect</span>
+        <h3 class="rm-title">ゴールから逆算した<br>道筋を引く</h3>
+        <p class="rm-desc">「あなたのゴール」から逆算して、必要なスキルを分解し、最適な順番で並べる。</p>
+        <div class="rm-stage">
+          <div class="rm-stage-head"><span>Roadmap — Web Engineer</span><span>4 / 12</span></div>
+          <div class="rmap">
+            <div class="ms done"><span class="dot">&#10003;</span><span class="label">HTML/CSS 基礎</span><span class="meta">Done</span></div>
+            <div class="ms done"><span class="dot">&#10003;</span><span class="label">JavaScript 入門</span><span class="meta">Done</span></div>
+            <div class="ms done"><span class="dot">&#10003;</span><span class="label">DOM操作と非同期処理</span><span class="meta">Done</span></div>
+            <div class="ms cur"><span class="dot">&#9679;</span><span class="label">React 基礎・フック</span><span class="meta">Now</span></div>
+            <div class="ms"><span class="dot">5</span><span class="label">状態管理 / Context</span><span class="meta">Next</span></div>
+            <div class="ms locked"><span class="dot">6</span><span class="label">Next.js とルーティング</span><span class="meta">Locked</span></div>
+            <div class="ms locked"><span class="dot">7</span><span class="label">バックエンド連携</span><span class="meta">Locked</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-list">
+        <div class="sub-item">
+          <h4>逆算型ロードマップ</h4>
+          <p>最大15コースを自動生成。「なぜこの順番なのか」も説明するので、納得して進められる。</p>
+        </div>
+        <div class="sub-item">
+          <h4>段階的アンロック</h4>
+          <p>全部見えると圧倒される。今やるべきことだけが見える設計。マイルストーンで達成を可視化。</p>
+        </div>
+        <div class="sub-item">
+          <h4>対話でいつでも調整</h4>
+          <p>「やっぱり別の方向に行きたい」も対話で対応。ロードマップは生き物。固定カリキュラムとは根本的に違う。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>08</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 9 — Tutor詳細
+     ============================================================ -->
+<section class="slide s-detail" data-label="Tutor Detail">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:56.25%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">09 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Tutor</div>
+    <div class="cols2">
+      <div class="role-mock rm-tutor">
+        <span class="rm-tag">Role 03 — Tutor</span>
+        <h3 class="rm-title">あなた専用の<br>教材を用意する</h3>
+        <p class="rm-desc">テキスト+音声の教材をリアルタイム生成。あなたの履歴と文脈を踏まえた、その場限りの教材。</p>
+        <div class="rm-stage">
+          <div class="doc-head">
+            <div>
+              <p class="doc-title">Reactフックを使いこなす</p>
+              <p class="doc-meta">Generated for you · 5 min read</p>
+            </div>
+          </div>
+          <div class="doc-body">
+            <p class="h">なぜフックが必要か</p>
+            <p>クラスコンポーネントの`this`バインドは、初学者にとって最大の壁でした。フックは関数のままで状態を扱えるようにします。</p>
+            <p class="h">useState の基本</p>
+            <p>あなたが先週学んだ「DOM操作」を思い出してください。あの時の手動更新を、Reactは差分計算で自動化します<span class="cursor"></span></p>
+          </div>
+          <div class="audio">
+            <span class="play">&#9654;</span>
+            <span class="wave"><i style="height:30%"></i><i style="height:60%" class="act"></i><i style="height:80%" class="act"></i><i style="height:45%" class="act"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:40%"></i><i style="height:65%"></i><i style="height:50%"></i><i style="height:35%"></i><i style="height:55%"></i><i style="height:25%"></i></span>
+            <span class="time">0:42 / 4:18</span>
+          </div>
+        </div>
+      </div>
+      <div class="sub-list">
+        <div class="sub-item">
+          <h4>リアルタイム教材生成</h4>
+          <p>ストリーミング配信で待たされる感覚なく、すぐ学び始められる。</p>
+        </div>
+        <div class="sub-item">
+          <h4>音声解説</h4>
+          <p>テキストだけでなく音声でも学べる。通勤中・家事中でもインプット可能。音声対話にも対応。</p>
+        </div>
+        <div class="sub-item">
+          <h4>文脈が残るAIチャット</h4>
+          <p>教材を読んで疑問があればその場でAIに質問。先週の学習内容も覚えている。汎用AIとの決定的な違い。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>09</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 10 — Companion詳細
+     ============================================================ -->
+<section class="slide s-detail" data-label="Companion Detail">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:62.5%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">10 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Companion</div>
+    <div class="cols2">
+      <div class="role-mock rm-companion">
+        <span class="rm-tag">Role 04 — Companion</span>
+        <h3 class="rm-title">毎日、隣にいる</h3>
+        <p class="rm-desc">「卒業」ではなく「進化」を設計している。離れても、戻ってきても。</p>
+        <div class="rm-stage">
+          <div class="welcome">
+            <div class="row">
+              <span class="av">Y</span>
+              <div>
+                <div class="greet">おかえりなさい、Yutaさん</div>
+                <div class="since">12 days since last visit</div>
+              </div>
+            </div>
+            <div class="msg">12日ぶりですね。Reactの学習、ちょうど"フック"のところで止まっていました。今日は5分だけ、復習から戻りませんか？</div>
+            <div class="actions">
+              <span class="btn">5分だけ復習する</span>
+              <span class="btn ghost">ゴールを見直す</span>
+            </div>
+          </div>
+          <div class="streak-card">
+            <span style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#ffce6b,#f0a030);display:grid;place-items:center;color:#4a2a00;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+            <div><div class="num">37 <span style="font-size:16px;color:rgba(255,255,255,0.6);">days</span></div><div class="lab">Streak protected</div></div>
+            <span class="protect">Auto-shield ON</span>
+          </div>
+        </div>
+      </div>
+      <div class="sub-list">
+        <div class="sub-item">
+          <h4>ゴール変更時</h4>
+          <p>「方向が変わったんですね。新しいゴールを一緒に考えましょう」&#8212; 否定しない、一緒に考える。</p>
+        </div>
+        <div class="sub-item">
+          <h4>離脱後の復帰</h4>
+          <p>罪悪感なし。「おかえりなさい」から始まる。3日でも3ヶ月でも。ストリーク保護で連続記録も守れる。</p>
+        </div>
+        <div class="sub-item">
+          <h4>日々のサイクル</h4>
+          <p>月曜: 今週のアクション提案。金曜: 振り返り。週末は休んでOK。あなたのペースで。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>10</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 11 — ペルソナ
+     ============================================================ -->
+<section class="slide s-target" data-label="Target">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:68.75%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">11 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Who is this for</div>
+    <h2 class="t-section" style="margin-top:16px;">こんな人に使ってほしい</h2>
+    <div class="pgrid">
+      <div class="pcol">
+        <div class="pabs core">
+          <span class="ano">Type 01</span>
+          <h4>動けない人</h4>
+          <p class="adesc">変わりたい気持ちはあるが、何から手をつければいいか分からず止まっている。</p>
+        </div>
+        <div class="pcard core">
+        <div class="phead">
+          <span class="av">A</span>
+          <div class="who"><span class="nm">Aoi</span><span class="age">28 · 営業 → PM志望</span></div>
+        </div>
+        <div class="pbody">
+          <div class="pinfo">
+            <span class="k">いま</span><span class="v">SaaS営業3年目。<b>「このままでいいのかな」</b>がずっと頭の片隅に。</span>
+            <span class="k">悩み</span><span class="v">変わりたいのに、何から始めればいいか分からない。</span>
+            <span class="k">使い方</span><span class="v">Coachと10ターンの対話で<b>具体的なゴール</b>を決める。</span>
+          </div>
+          <div class="pquote">「やりたいことはあるけど、最初の一歩が出ない」</div>
+        </div>
+      </div>
+      </div>
+      <div class="pcol">
+        <div class="pabs">
+          <span class="ano">Type 02</span>
+          <h4>続かない人</h4>
+          <p class="adesc">独学を始めても3日〜1週間で止まる。意志ではなく仕組みが足りない。</p>
+        </div>
+        <div class="pcard">
+        <div class="phead">
+          <span class="av">R</span>
+          <div class="who"><span class="nm">Ren</span><span class="age">26 · エンジニア独学中</span></div>
+        </div>
+        <div class="pbody">
+          <div class="pinfo">
+            <span class="k">いま</span><span class="v">Udemy・書籍・YouTube。<b>3日で止まる</b>を半年繰り返している。</span>
+            <span class="k">悩み</span><span class="v">伴走してくれる人がいない。一人で走り続けるのは構造的に難しい。</span>
+            <span class="k">使い方</span><span class="v">Architectのロードマップ + 毎日の<b>今日のアクション</b>で続く。</span>
+          </div>
+          <div class="pquote">「独学は最初の1週間で終わる」</div>
+        </div>
+      </div>
+      </div>
+      <div class="pcol">
+        <div class="pabs">
+          <span class="ano">Type 03</span>
+          <h4>相談相手がいない人</h4>
+          <p class="adesc">迷いを率直に話せる相手がいない。コーチは高くて手が届かない。</p>
+        </div>
+        <div class="pcard">
+        <div class="phead">
+          <span class="av">M</span>
+          <div class="who"><span class="nm">Mio</span><span class="age">31 · 子育て × 復職検討</span></div>
+        </div>
+        <div class="pbody">
+          <div class="pinfo">
+            <span class="k">いま</span><span class="v">育休3年目。復職に不安。<b>夫にも友人にも話しづらい</b>。</span>
+            <span class="k">悩み</span><span class="v">コーチは月3万で手が届かない。AIなら率直に何度でも相談できる。</span>
+            <span class="k">使い方</span><span class="v">Companionに毎週チェックイン。<b>5分から</b>復職準備を再開。</span>
+          </div>
+          <div class="pquote">「誰にも言えない"このままでいいのかな"」</div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="pfoot">
+      <span class="l"><span class="dot"></span><b>共通点</b>：意志ではなく仕組みで前に進みたい、20–30代のキャリア再設計層。</span>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>11</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 12 — 3ステップ
+     ============================================================ -->
+<section class="slide s-steps" data-label="3 Steps">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:75%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">12 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">3 Steps</div>
+    <h2 class="t-section" style="margin-top:24px;">3ステップで始める</h2>
+    <div class="grid3">
+      <div class="step">
+        <span class="num">01</span>
+        <h3>話すだけで<br>ゴールが見えてくる</h3>
+        <p class="desc">AIコーチとの対話で、ぼんやりした「こうなりたい」が明確なゴールに変わる。</p>
+        <div class="phone-frame"><img src="assets/mockup_image.png" alt="ヒアリング画面" /></div>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <h3>あなた専用の<br>道筋ができる</h3>
+        <p class="desc">ゴールから逆算したロードマップを自動生成。何を、どの順で、どのくらい。</p>
+        <div class="phone-frame"><img src="assets/mockup2_image.png" alt="ロードマップ画面" /></div>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <h3>今日やることが<br>もう決まっている</h3>
+        <p class="desc">毎週のアクションが明確。教材も、チェックインも、伴走もここから。</p>
+        <div class="phone-frame"><img src="assets/mockup3_image.png" alt="コーチホーム画面" /></div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>12</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 13 — ホーム画面
+     ============================================================ -->
+<section class="slide s-home" data-label="Coach Home">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:81.25%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">13 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Daily Experience</div>
+    <h2 class="t-section" style="margin-top:24px;">今日やることが、もう決まっている</h2>
+    <div class="home-grid">
+      <div class="today-mock">
+        <div class="tm-head">
+          <div class="tm-greet">2026 / 03 / 12 · THU</div>
+          <div class="tm-streak">&#128293; 14 DAYS</div>
+        </div>
+        <div class="tm-title">今週やること</div>
+        <div class="tm-sub">ペンリーが提案した3つ。今日は2つ目に取り掛かり。</div>
+        <div class="tm-action tm-done">
+          <div class="tm-check">&#10003;</div>
+          <div class="tm-text">
+            <div class="tm-act">React Hooks の useState を学ぶ</div>
+            <div class="tm-meta">月・火 · 完了</div>
+          </div>
+          <div class="tm-pill">DONE</div>
+        </div>
+        <div class="tm-action tm-now">
+          <div class="tm-check">2</div>
+          <div class="tm-text">
+            <div class="tm-act">コンポーネント設計の考え方を読む</div>
+            <div class="tm-meta">水・木 · 今ココ</div>
+          </div>
+          <div class="tm-pill">NOW</div>
+        </div>
+        <div class="tm-action">
+          <div class="tm-check">3</div>
+          <div class="tm-text">
+            <div class="tm-act">小さな Todo アプリを作ってみる</div>
+            <div class="tm-meta">金 · アウトプット</div>
+          </div>
+        </div>
+        <div class="tm-foot">
+          <span>今週の進捗 33%</span>
+          <span>ペンリーと話す</span>
+        </div>
+      </div>
+      <div class="home-msg">
+        <div class="msg-hero">
+          <div class="lbl">THE DAILY EXPERIENCE</div>
+          <div class="ph"><del>今日何しよう</del>と考える時間が、<br><span class="em">学ぶ時間</span>に変わる。</div>
+        </div>
+        <div class="home-pts">
+          <div class="home-pt">
+            <div class="pt-num">3<span style="font-size:16px; color:var(--sub);">つまで</span></div>
+            <div class="pt-lbl">週のアクション</div>
+            <div class="pt-desc">多すぎない。迷わない。</div>
+          </div>
+          <div class="home-pt">
+            <div class="pt-num">0<span style="font-size:16px; color:var(--sub);">タップ</span></div>
+            <div class="pt-lbl">ホームを開くだけ</div>
+            <div class="pt-desc">今日やることがすぐ見える。</div>
+          </div>
+          <div class="home-pt">
+            <div class="pt-num">5<span style="font-size:16px; color:var(--sub);">分から</span></div>
+            <div class="pt-lbl">1日の学習時間</div>
+            <div class="pt-desc">忙しい日は5分だけでOK。</div>
+          </div>
+          <div class="home-pt">
+            <div class="pt-num">いつでも</div>
+            <div class="pt-lbl">ペンリーと対話</div>
+            <div class="pt-desc">迷いや調整はその場で。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>13</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 14 — Before → After
+     ============================================================ -->
+<section class="slide s-ba" data-label="Before After">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:87.5%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Product Overview</span><span class="r">14 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Transformation</div>
+    <h2 class="t-section" style="margin-top:24px;">Navilyを使うと、何が変わるか</h2>
+    <div class="ba-grid">
+      <div class="ba-col ba-before">
+        <span class="ba-label">Before</span>
+        <div class="ba-item">
+          <h4>Udemy買って3日で放置</h4>
+          <p class="ba-desc">教材は良いのに、自分のゴールとの繋がりが見えなくて開かなくなる。</p>
+        </div>
+        <div class="ba-item">
+          <h4>YouTubeで迷子になる</h4>
+          <p class="ba-desc">おすすめに流されて2時間。「結局何を学んだんだっけ」で終わる。</p>
+        </div>
+        <div class="ba-item">
+          <h4>ChatGPTに聞くけど忘れられる</h4>
+          <p class="ba-desc">毎回イチから説明。先週の会話を覚えていない。文脈ゼロ。</p>
+        </div>
+        <div class="ba-item">
+          <h4>一人で迷って止まる</h4>
+          <p class="ba-desc">「これで合ってる？」を聞ける人がいない。不安で動けなくなる。</p>
+        </div>
+      </div>
+      <div class="ba-arrow">&#8594;</div>
+      <div class="ba-col ba-after">
+        <span class="ba-label">After — with Navily</span>
+        <div class="ba-item">
+          <h4>毎日5分、自分の道を進む</h4>
+          <p class="ba-desc">ゴールから逆算された「今日のアクション」があるから、迷わず始められる。</p>
+        </div>
+        <div class="ba-item">
+          <h4>自分専用の教材で学ぶ</h4>
+          <p class="ba-desc">あなたの文脈に合った教材が自動生成。汎用コンテンツの海で溺れない。</p>
+        </div>
+        <div class="ba-item">
+          <h4>文脈を覚えているAIコーチ</h4>
+          <p class="ba-desc">先週学んだこと、設定したゴール、全部覚えている。会話が積み上がる。</p>
+        </div>
+        <div class="ba-item">
+          <h4>迷ったらペンリーに相談</h4>
+          <p class="ba-desc">方向転換も、不安も、何でも話せる。罪悪感なく戻れる「おかえりなさい」。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>14</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 15 — まとめ
+     ============================================================ -->
+<section class="slide s-summary" data-label="Summary">
+  <div class="dotgrid"></div>
+  <div class="progress" style="width:93.75%"></div>
+  <div class="running-header"><span class="l"><span class="ix">Navily</span> Summary</span><span class="r">15 / 17</span></div>
+  <div class="pad">
+    <div class="eyebrow">Summary</div>
+    <h2 class="t-section" style="margin-top:24px;">Navily &#8212; ゴールを見つけて、毎日伴走するAIコーチ</h2>
+    <div class="grid4">
+      <div class="scard">
+        <span class="num" style="color:var(--amber);">?</span>
+        <h3>解く課題</h3>
+        <p class="desc">「やりたいことはあるのに動けない」「学び始めても続かない」&#8212; 意志ではなく仕組みの問題。</p>
+        <p style="margin-top:auto; padding-top:14px; border-top:1px solid var(--line); font-size:14px; color:var(--sub-2);">ゴール設定 × 継続の二重構造</p>
+      </div>
+      <div class="scard">
+        <span class="num">4</span>
+        <h3>AIロール</h3>
+        <p class="desc">Coach(ゴール発見) &#8594; Architect(道筋設計) &#8594; Tutor(教材生成) &#8594; Companion(毎日伴走)。この4つの統合が、Navilyだけの体験。</p>
+        <p style="margin-top:auto; padding-top:14px; border-top:1px solid var(--line); font-size:14px; color:var(--moss); font-weight:600;">唯一の統合AI伴走型</p>
+      </div>
+      <div class="scard">
+        <span class="num">10<span style="font-size:0.4em; font-weight:500;">分</span></span>
+        <h3>初回体験</h3>
+        <p class="desc">登録10秒 &#8594; 対話5分 &#8594; ロードマップ自動生成 &#8594; 今日のアクション。思いついた今日から動き出せる。</p>
+        <p style="margin-top:auto; padding-top:14px; border-top:1px solid var(--line); font-size:14px; color:var(--sub-2);">カード不要 · 無料で始められる</p>
+      </div>
+      <div class="scard">
+        <span class="num">&#165;0<span style="font-size:0.4em; font-weight:500;">&#12316;</span></span>
+        <h3>プラン</h3>
+        <p class="desc">無料で全ての基本機能を体験。価値を感じたらアップグレード。いつでも解約可能。</p>
+        <p style="margin-top:auto; padding-top:14px; border-top:1px solid var(--line);"><a href="https://navilyai.com" target="_blank" rel="noopener" style="font-size:15px; color:var(--moss); font-weight:600; text-decoration:none;">navilyai.com &#8594;</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span>Navily</span><span>15</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 16 — CTA
+     ============================================================ -->
+<section class="slide s-cta" data-label="CTA">
+  <div class="progress" style="width:100%"></div>
+  <div class="cta-pad">
+    <p class="en">Your vision can take shape.</p>
+    <h1>あなたのビジョンは、<br>形にできる。</h1>
+    <div class="cta-links">
+      <div class="cta-link-item">
+        <img src="assets/M_gainfriends_2dbarcodes_BW.png" alt="LINE QR" style="width:140px;height:140px;border-radius:16px;background:white;padding:8px;box-shadow:0 8px 32px rgba(0,0,0,0.15);" />
+        <span class="cta-link-label">LINE で友だち追加</span>
+      </div>
+      <div class="cta-link-item">
+        <a href="https://navilyai.com" target="_blank" rel="noopener" class="cta-btn">Web で始める &#8594;</a>
+        <span class="cta-link-label">navilyai.com</span>
+      </div>
+      <div class="cta-link-item">
+        <a href="https://navilyai.com/ja/ios" target="_blank" rel="noopener" class="cta-btn cta-btn-outline">iOS版を予約する &#8594;</a>
+        <span class="cta-link-label">先行アクセス + リリース通知</span>
+      </div>
+    </div>
+    <p class="cta-sub">クレジットカード不要 &#183; AIチャット 3回/日 無料</p>
+    <div class="brand-row">
+      <img src="assets/navily-logo.png" alt="Navily" />
+      <span>Navily &#8212; AIコーチ</span>
+    </div>
+  </div>
+  <div class="chrome" style="color:rgba(255,255,255,0.25);"><span>Navily</span><span>16</span></div>
+</section>
+
+</deck-stage>
+
+</body>
+</html>
